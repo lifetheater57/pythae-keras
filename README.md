@@ -1,3 +1,11 @@
+# pythae-keras
+
+This <a href='https://github.com/clementchadebec/benchmark_VAE'>pythae</a> fork aims to translate the PyTorch specific library to a Keras 3-based library that would support TensorFlow, PyTorch and Jax backends simultaneously.
+
+Check the `kerasization` branch to see the progress.
+
+## Below is the documentation of the original library (to be updated)
+
 <p align="center">
 	<a href="https://pypi.org/project/pythae/">
 	    <img src='https://badge.fury.io/py/pythae.svg' alt='Python' />
