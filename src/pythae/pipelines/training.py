@@ -7,7 +7,7 @@ import torch
 from ..customexception import DatasetError
 from ..data.datasets import collate_dataset_output
 from ..data.preprocessors import BaseDataset, DataProcessor
-from ..models import BaseAE
+from ..models import BaseAE_PT
 from ..trainers import *
 from ..trainers.training_callbacks import TrainingCallback
 from .base_pipeline import Pipeline
@@ -34,7 +34,7 @@ class TrainingPipeline(Pipeline):
 
     Parameters:
 
-        model (Optional[BaseAE]): An instance of :class:`~pythae.models.BaseAE` you want to train.
+        model (Optional[BaseAE_PT]): An instance of :class:`~pythae.models.BaseAE_PT` you want to train.
             If None, a default :class:`~pythae.models.VAE` model is used. Default: None.
 
         training_config (Optional[BaseTrainerConfig]): An instance of
@@ -44,7 +44,7 @@ class TrainingPipeline(Pipeline):
 
     def __init__(
         self,
-        model: Optional[BaseAE],
+        model: Optional[BaseAE_PT],
         training_config: Optional[BaseTrainerConfig] = None,
     ):
         if training_config is None:

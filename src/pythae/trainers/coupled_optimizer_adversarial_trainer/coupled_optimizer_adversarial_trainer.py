@@ -11,7 +11,7 @@ import torch.optim as optim
 import torch.optim.lr_scheduler as lr_scheduler
 
 from ...data.datasets import BaseDataset
-from ...models import BaseAE
+from ...models import BaseAE_PT
 from ..base_trainer import BaseTrainer
 from ..trainer_utils import set_seed
 from ..training_callbacks import TrainingCallback
@@ -31,7 +31,7 @@ class CoupledOptimizerAdversarialTrainer(BaseTrainer):
     """Trainer using distinct optimizers for the encoder, decoder and discriminator.
 
     Args:
-        model (BaseAE): The model to train
+        model (BaseAE_PT): The model to train
 
         train_dataset (BaseDataset): The training dataset of type
             :class:`~pythae.data.dataset.BaseDataset`
@@ -55,7 +55,7 @@ class CoupledOptimizerAdversarialTrainer(BaseTrainer):
 
     def __init__(
         self,
-        model: BaseAE,
+        model: BaseAE_PT,
         train_dataset: BaseDataset,
         eval_dataset: Optional[BaseDataset] = None,
         training_config: Optional[CoupledOptimizerAdversarialTrainerConfig] = None,
@@ -611,7 +611,7 @@ class CoupledOptimizerAdversarialTrainer(BaseTrainer):
             epoch_discriminator_loss,
         )
 
-    def save_checkpoint(self, model: BaseAE, dir_path, epoch: int):
+    def save_checkpoint(self, model: BaseAE_PT, dir_path, epoch: int):
         """Saves a checkpoint alowing to restart training from here
 
         Args:

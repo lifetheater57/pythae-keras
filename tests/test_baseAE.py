@@ -5,7 +5,7 @@ import pytest
 import torch
 
 from pythae.customexception import BadInheritanceError
-from pythae.models import BaseAE, BaseAEConfig
+from pythae.models import BaseAE_PT, BaseAEConfig
 from tests.data.custom_architectures import (
     Decoder_AE_Conv,
     Encoder_AE_Conv,
@@ -38,7 +38,7 @@ def custom_decoder(model_config_with_input_dim):
 
 class Test_Model_Building:
     def test_build_model(self, model_config_with_input_dim):
-        model = BaseAE(model_config_with_input_dim)
+        model = BaseAE_PT(model_config_with_input_dim)
         assert all(
             [
                 model.input_dim == model_config_with_input_dim.input_dim,
@@ -48,22 +48,22 @@ class Test_Model_Building:
 
     def test_raises_no_input_dim(self, model_configs_no_input_dim, custom_decoder):
         with pytest.raises(AttributeError):
-            model = BaseAE(model_configs_no_input_dim)
+            model = BaseAE_PT(model_configs_no_input_dim)
 
-        model = BaseAE(model_configs_no_input_dim, decoder=custom_decoder)
+        model = BaseAE_PT(model_configs_no_input_dim, decoder=custom_decoder)
 
     def test_build_custom_arch(self, model_config_with_input_dim, custom_decoder):
 
-        model = BaseAE(model_config_with_input_dim, decoder=custom_decoder)
+        model = BaseAE_PT(model_config_with_input_dim, decoder=custom_decoder)
 
         assert model.decoder == custom_decoder
         assert not model.model_config.uses_default_decoder
 
-        model = BaseAE(model_config_with_input_dim)
+        model = BaseAE_PT(model_config_with_input_dim)
 
         assert model.model_config.uses_default_decoder
 
-        model = BaseAE(model_config_with_input_dim, decoder=custom_decoder)
+        model = BaseAE_PT(model_config_with_input_dim, decoder=custom_decoder)
 
         assert model.decoder == custom_decoder
         assert not model.model_config.uses_default_decoder
@@ -73,7 +73,7 @@ class Test_Model_Saving:
     def test_creates_saving_path(self, tmpdir, model_config_with_input_dim):
         tmpdir.mkdir("saving")
         dir_path = os.path.join(tmpdir, "saving")
-        model = BaseAE(model_config_with_input_dim)
+        model = BaseAE_PT(model_config_with_input_dim)
         model.save(dir_path=dir_path)
 
     def test_default_model_saving(self, tmpdir, model_config_with_input_dim):
@@ -81,7 +81,7 @@ class Test_Model_Saving:
         tmpdir.mkdir("dummy_folder")
         dir_path = os.path.join(tmpdir, "dummy_folder")
 
-        model = BaseAE(model_config_with_input_dim)
+        model = BaseAE_PT(model_config_with_input_dim)
 
         model.save(dir_path=dir_path)
 
@@ -90,7 +90,7 @@ class Test_Model_Saving:
         )
 
         # reload model
-        model_rec = BaseAE.load_from_folder(dir_path)
+        model_rec = BaseAE_PT.load_from_folder(dir_path)
 
         # check configs are the same
         assert model_rec.model_config.__dict__ == model.model_config.__dict__
@@ -109,7 +109,7 @@ class Test_Model_Saving:
         tmpdir.mkdir("dummy_folder")
         dir_path = dir_path = os.path.join(tmpdir, "dummy_folder")
 
-        model = BaseAE(model_config_with_input_dim, decoder=custom_decoder)
+        model = BaseAE_PT(model_config_with_input_dim, decoder=custom_decoder)
 
         model.save(dir_path=dir_path)
 
@@ -118,7 +118,7 @@ class Test_Model_Saving:
         )
 
         # reload model
-        model_rec = BaseAE.load_from_folder(dir_path)
+        model_rec = BaseAE_PT.load_from_folder(dir_path)
 
         # check configs are the same
         assert model_rec.model_config.__dict__ == model.model_config.__dict__
@@ -137,7 +137,7 @@ class Test_Model_Saving:
         tmpdir.mkdir("dummy_folder")
         dir_path = os.path.join(tmpdir, "dummy_folder")
 
-        model = BaseAE(model_config_with_input_dim, decoder=custom_decoder)
+        model = BaseAE_PT(model_config_with_input_dim, decoder=custom_decoder)
 
         model.save(dir_path=dir_path)
 
@@ -145,21 +145,21 @@ class Test_Model_Saving:
 
         # check raises decoder.pkl is missing
         with pytest.raises(FileNotFoundError):
-            model_rec = BaseAE.load_from_folder(dir_path)
+            model_rec = BaseAE_PT.load_from_folder(dir_path)
 
         os.remove(os.path.join(dir_path, "model.pt"))
 
         # check raises model.pt is missing
         with pytest.raises(FileNotFoundError):
-            model_rec = BaseAE.load_from_folder(dir_path)
+            model_rec = BaseAE_PT.load_from_folder(dir_path)
 
         torch.save({"wrong_key": 0.0}, os.path.join(dir_path, "model.pt"))
         # check raises wrong key in model.pt
         with pytest.raises(KeyError):
-            model_rec = BaseAE.load_from_folder(dir_path)
+            model_rec = BaseAE_PT.load_from_folder(dir_path)
 
         os.remove(os.path.join(dir_path, "model_config.json"))
 
         # check raises encoder.pkl is missing
         with pytest.raises(FileNotFoundError):
-            model_rec = BaseAE.load_from_folder(dir_path)
+            model_rec = BaseAE_PT.load_from_folder(dir_path)

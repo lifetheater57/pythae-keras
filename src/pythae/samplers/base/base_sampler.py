@@ -6,7 +6,7 @@ import numpy as np
 import torch
 from imageio import imwrite
 
-from ...models import BaseAE
+from ...models import BaseAE_PT
 from .base_sampler_config import BaseSamplerConfig
 
 logger = logging.getLogger(__name__)
@@ -21,12 +21,12 @@ class BaseSampler:
     """Base class for samplers used to generate from the VAEs models.
 
     Args:
-        model (BaseAE): The vae model to sample from.
+        model (BaseAE_PT): The vae model to sample from.
         sampler_config (BaseSamplerConfig): An instance of BaseSamplerConfig in which any sampler's
             parameters is made available. If None a default configuration is used. Default: None
     """
 
-    def __init__(self, model: BaseAE, sampler_config: BaseSamplerConfig = None):
+    def __init__(self, model: BaseAE_PT, sampler_config: BaseSamplerConfig = None):
         if sampler_config is None:
             sampler_config = BaseSamplerConfig()
 

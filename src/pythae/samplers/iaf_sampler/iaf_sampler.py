@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader, Dataset
 
 from ...data.datasets import collate_dataset_output
 from ...data.preprocessors import DataProcessor
-from ...models import BaseAE
+from ...models import BaseAE_PT
 from ...models.normalizing_flows import IAF, IAFConfig, NFModel
 from ...trainers import BaseTrainer, BaseTrainerConfig
 from ..base.base_sampler import BaseSampler
@@ -20,7 +20,7 @@ class IAFSampler(BaseSampler):
     """Fits an Inverse Autoregressive Flow in the Autoencoder's latent space.
 
     Args:
-        model (BaseAE): The AE model to sample from
+        model (BaseAE_PT): The AE model to sample from
         sampler_config (IAFSamplerConfig): A IAFSamplerConfig instance containing
             the main parameters of the sampler. If None, a pre-defined configuration is used.
             Default: None
@@ -31,7 +31,7 @@ class IAFSampler(BaseSampler):
         sampler before sampling.
     """
 
-    def __init__(self, model: BaseAE, sampler_config: IAFSamplerConfig = None):
+    def __init__(self, model: BaseAE_PT, sampler_config: IAFSamplerConfig = None):
         self.is_fitted = False
 
         if sampler_config is None:

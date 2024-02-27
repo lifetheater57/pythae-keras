@@ -15,7 +15,7 @@ from torch.utils.data.distributed import DistributedSampler
 
 from ...customexception import ModelError
 from ...data.datasets import BaseDataset, collate_dataset_output
-from ...models import BaseAE
+from ...models import BaseAE_PT
 from ..trainer_utils import set_seed
 from ..training_callbacks import (
     CallbackHandler,
@@ -37,7 +37,7 @@ class BaseTrainer:
     """Base class to perform model training.
 
     Args:
-        model (BaseAE): A instance of :class:`~pythae.models.BaseAE` to train
+        model (BaseAE_PT): A instance of :class:`~pythae.models.BaseAE_PT` to train
 
         train_dataset (BaseDataset): The training dataset of type
             :class:`~pythae.data.dataset.BaseDataset`
@@ -55,7 +55,7 @@ class BaseTrainer:
 
     def __init__(
         self,
-        model: BaseAE,
+        model: BaseAE_PT,
         train_dataset: Union[BaseDataset, DataLoader],
         eval_dataset: Optional[Union[BaseDataset, DataLoader]] = None,
         training_config: Optional[BaseTrainerConfig] = None,
@@ -646,11 +646,11 @@ class BaseTrainer:
 
         return epoch_loss
 
-    def save_model(self, model: BaseAE, dir_path: str):
+    def save_model(self, model: BaseAE_PT, dir_path: str):
         """This method saves the final model along with the config files
 
         Args:
-            model (BaseAE): The model to be saved
+            model (BaseAE_PT): The model to be saved
             dir_path (str): The folder where the model and config files should be saved
         """
 
@@ -669,7 +669,7 @@ class BaseTrainer:
 
         self.callback_handler.on_save(self.training_config)
 
-    def save_checkpoint(self, model: BaseAE, dir_path, epoch: int):
+    def save_checkpoint(self, model: BaseAE_PT, dir_path, epoch: int):
         """Saves a checkpoint alowing to restart training from here
 
         Args:
@@ -704,7 +704,7 @@ class BaseTrainer:
         # save training config
         self.training_config.save_json(checkpoint_dir, "training_config")
 
-    def predict(self, model: BaseAE):
+    def predict(self, model: BaseAE_PT):
         model.eval()
 
         with self.amp_context:

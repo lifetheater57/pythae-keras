@@ -4,14 +4,14 @@ from typing import Optional
 import torch.nn.functional as F
 
 from ...data.datasets import BaseDataset
-from ..base import BaseAE
+from ..base import BaseAE_PT
 from ..base.base_utils import ModelOutput
 from ..nn import BaseDecoder_PT, BaseEncoder_PT
 from ..nn.default_architectures import Encoder_AE_MLP
 from .ae_config import AEConfig
 
 
-class AE(BaseAE):
+class AE(BaseAE_PT):
     """Vanilla Autoencoder model.
 
     Args:
@@ -39,7 +39,7 @@ class AE(BaseAE):
         encoder: Optional[BaseEncoder_PT] = None,
         decoder: Optional[BaseDecoder_PT] = None,
     ):
-        BaseAE.__init__(self, model_config=model_config, decoder=decoder)
+        BaseAE_PT.__init__(self, model_config=model_config, decoder=decoder)
 
         self.model_name = "AE"
 

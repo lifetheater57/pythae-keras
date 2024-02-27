@@ -4,7 +4,7 @@ from typing import Optional, Union
 import numpy as np
 import torch
 
-from ..models import BaseAE
+from ..models import BaseAE_PT
 from ..samplers import *
 from ..trainers import BaseTrainerConfig
 from .base_pipeline import Pipeline
@@ -24,7 +24,7 @@ class GenerationPipeline(Pipeline):
 
     Parameters:
 
-        model (Optional[BaseAE]): An instance of :class:`~pythae.models.BaseAE` you want to train.
+        model (Optional[BaseAE_PT]): An instance of :class:`~pythae.models.BaseAE_PT` you want to train.
             If None, a default :class:`~pythae.models.VAE` model is used. Default: None.
 
         training_config (Optional[BaseTrainerConfig]): An instance of
@@ -34,7 +34,7 @@ class GenerationPipeline(Pipeline):
 
     def __init__(
         self,
-        model: Optional[BaseAE],
+        model: Optional[BaseAE_PT],
         sampler_config: Optional[BaseSamplerConfig] = None,
     ):
         if sampler_config is None:

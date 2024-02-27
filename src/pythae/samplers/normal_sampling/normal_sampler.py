@@ -1,6 +1,6 @@
 import torch
 
-from ...models import BaseAE
+from ...models import BaseAE_PT
 from ..base import BaseSampler
 from .normal_config import NormalSamplerConfig
 
@@ -9,13 +9,13 @@ class NormalSampler(BaseSampler):
     """Samples from a Standard normal distribution in the Autoencoder's latent space.
 
     Args:
-        model (BaseAE): The vae model to sample from.
+        model (BaseAE_PT): The vae model to sample from.
         sampler_config (BaseSamplerConfig): An instance of BaseSamplerConfig in which any sampler's
             parameters is made available. If None a default configuration is used. Default: None
 
     """
 
-    def __init__(self, model: BaseAE, sampler_config: NormalSamplerConfig = None):
+    def __init__(self, model: BaseAE_PT, sampler_config: NormalSamplerConfig = None):
         if sampler_config is None:
             sampler_config = NormalSamplerConfig()
 

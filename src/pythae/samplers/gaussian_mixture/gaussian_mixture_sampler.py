@@ -8,7 +8,7 @@ from torch.utils.data import DataLoader, Dataset
 
 from ...data.datasets import collate_dataset_output
 from ...data.preprocessors import DataProcessor
-from ...models import BaseAE
+from ...models import BaseAE_PT
 from ..base import BaseSampler
 from .gaussian_mixture_config import GaussianMixtureSamplerConfig
 
@@ -24,7 +24,7 @@ class GaussianMixtureSampler(BaseSampler):
     """Fits a Gaussian Mixture in the Autoencoder's latent space.
 
     Args:
-        model (BaseAE): The vae model to sample from.
+        model (BaseAE_PT): The vae model to sample from.
         sampler_config (BaseSamplerConfig): An instance of BaseSamplerConfig in which any sampler's
             parameters is made available. If None a default configuration is used. Default: None.
 
@@ -36,7 +36,7 @@ class GaussianMixtureSampler(BaseSampler):
     """
 
     def __init__(
-        self, model: BaseAE, sampler_config: GaussianMixtureSamplerConfig = None
+        self, model: BaseAE_PT, sampler_config: GaussianMixtureSamplerConfig = None
     ):
         if sampler_config is None:
             sampler_config = GaussianMixtureSamplerConfig()

@@ -15,6 +15,6 @@ It contains:
 """
 
 from .base_config import BaseAEConfig
-from .base_model import BaseAE
+from .base_model import BaseAE, BaseAE_PT
 
-__all__ = ["BaseAE", "BaseAEConfig"]
+__all__ = ["BaseAE", "BaseAEConfig", "BaseAE_PT"]

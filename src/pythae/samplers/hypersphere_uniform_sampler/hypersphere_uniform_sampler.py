@@ -1,6 +1,6 @@
 import torch
 
-from ...models import BaseAE
+from ...models import BaseAE_PT
 from ..base import BaseSampler
 from .hypersphere_uniform_config import HypersphereUniformSamplerConfig
 
@@ -9,14 +9,14 @@ class HypersphereUniformSampler(BaseSampler):
     """Sampling from uniform distribution on hypersphere.
 
     Args:
-        model (BaseAE): The vae model to sample from.
+        model (BaseAE_PT): The vae model to sample from.
         sampler_config (BaseSamplerConfig): An instance of BaseSamplerConfig in which any sampler's
             parameters is made available. If None a default configuration is used. Default: None
 
     """
 
     def __init__(
-        self, model: BaseAE, sampler_config: HypersphereUniformSamplerConfig = None
+        self, model: BaseAE_PT, sampler_config: HypersphereUniformSamplerConfig = None
     ):
         if sampler_config is None:
             sampler_config = HypersphereUniformSamplerConfig()

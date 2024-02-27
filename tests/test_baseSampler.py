@@ -5,7 +5,7 @@ import pytest
 import torch
 from imageio import imread
 
-from pythae.models import BaseAE, BaseAEConfig
+from pythae.models import BaseAE_PT, BaseAEConfig
 from pythae.samplers import BaseSampler, BaseSamplerConfig
 
 PATH = os.path.dirname(os.path.abspath(__file__))
@@ -24,7 +24,7 @@ def img_tensors(request):
 
 @pytest.fixture
 def model_sample():
-    return BaseAE((BaseAEConfig(input_dim=(1, 28, 28))))
+    return BaseAE_PT((BaseAEConfig(input_dim=(1, 28, 28))))
 
 
 @pytest.fixture()
