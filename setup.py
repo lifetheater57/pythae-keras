@@ -33,6 +33,7 @@ setup(
         "scikit-learn",
         "scipy>=1.7.1",
         "torch>=1.10.1",
+        "matplotlib",
         "tqdm",
         "typing_extensions",
         "dataclasses>=0.6",
