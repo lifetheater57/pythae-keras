@@ -12,7 +12,7 @@ import torch.nn.functional as F
 from ...customexception import BadInheritanceError
 from ...data.datasets import BaseDataset
 from ..base.base_utils import CPU_Unpickler, ModelOutput, hf_hub_is_available
-from ..nn import BaseDecoder, BaseDiscriminator, BaseEncoder
+from ..nn import BaseDecoder_PT, BaseDiscriminator, BaseEncoder_PT
 from ..nn.default_architectures import Discriminator_MLP
 from ..vae import VAE
 from .vae_gan_config import VAEGANConfig
@@ -30,12 +30,12 @@ class VAEGAN(VAE):
         model_config (VAEGANConfig): The Autoencoder configuration setting the main
             parameters of the model.
 
-        encoder (BaseEncoder): An instance of BaseEncoder (inheriting from `torch.nn.Module` which
+        encoder (BaseEncoder_PT): An instance of BaseEncoder_PT (inheriting from `torch.nn.Module` which
             plays the role of encoder. This argument allows you to use your own neural networks
             architectures if desired. If None is provided, a simple Multi Layer Preception
             (https://en.wikipedia.org/wiki/Multilayer_perceptron) is used. Default: None.
 
-        decoder (BaseDecoder): An instance of BaseDecoder (inheriting from `torch.nn.Module` which
+        decoder (BaseDecoder_PT): An instance of BaseDecoder_PT (inheriting from `torch.nn.Module` which
             plays the role of decoder. This argument allows you to use your own neural networks
             architectures if desired. If None is provided, a simple Multi Layer Preception
             (https://en.wikipedia.org/wiki/Multilayer_perceptron) is used. Default: None.
@@ -54,8 +54,8 @@ class VAEGAN(VAE):
     def __init__(
         self,
         model_config: VAEGANConfig,
-        encoder: Optional[BaseEncoder] = None,
-        decoder: Optional[BaseDecoder] = None,
+        encoder: Optional[BaseEncoder_PT] = None,
+        decoder: Optional[BaseDecoder_PT] = None,
         discriminator: Optional[BaseDiscriminator] = None,
     ):
         VAE.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)

@@ -10,7 +10,7 @@ import torch.nn.functional as F
 from pythae.data.preprocessors import DataProcessor
 from pythae.models import AutoModel, PoincareVAE, PoincareVAEConfig
 from pythae.models.base.base_utils import ModelOutput
-from pythae.models.nn import BaseDecoder, BaseEncoder
+from pythae.models.nn import BaseDecoder_PT, BaseEncoder_PT
 from pythae.models.pvae.pvae_utils import PoincareBall
 from pythae.trainers import BaseTrainer, BaseTrainerConfig
 
@@ -81,7 +81,7 @@ class GeodesicLayer(RiemannianLayer):
 
 
 ### Define paper encoder network
-class Encoder(BaseEncoder):
+class Encoder(BaseEncoder_PT):
     """Usual encoder followed by an exponential map"""
 
     def __init__(self, model_config, prior_iso):
@@ -112,7 +112,7 @@ class Encoder(BaseEncoder):
 
 
 ### Define paper decoder network
-class Decoder(BaseDecoder):
+class Decoder(BaseDecoder_PT):
     """First layer is a Hypergyroplane followed by usual decoder"""
 
     def __init__(self, model_config):

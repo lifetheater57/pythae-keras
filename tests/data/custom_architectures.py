@@ -17,9 +17,9 @@ class Layer(nn.Module):
         return x
 
 
-class Encoder_AE_Conv(BaseEncoder):
+class Encoder_AE_Conv(BaseEncoder_PT):
     def __init__(self, args):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
         self.input_dim = args.input_dim
         self.latent_dim = args.latent_dim
         self.n_channels = 1
@@ -91,9 +91,9 @@ class Encoder_AE_Conv(BaseEncoder):
         return output
 
 
-class Encoder_VAE_Conv(BaseEncoder):
+class Encoder_VAE_Conv(BaseEncoder_PT):
     def __init__(self, args):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
         self.input_dim = args.input_dim
         self.latent_dim = args.latent_dim
         self.n_channels = 1
@@ -168,9 +168,9 @@ class Encoder_VAE_Conv(BaseEncoder):
         return output
 
 
-class Encoder_SVAE_Conv(BaseEncoder):
+class Encoder_SVAE_Conv(BaseEncoder_PT):
     def __init__(self, args):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
         self.input_dim = args.input_dim
         self.latent_dim = args.latent_dim
         self.n_channels = 1
@@ -247,9 +247,9 @@ class Encoder_SVAE_Conv(BaseEncoder):
         return output
 
 
-class Decoder_AE_Conv(BaseDecoder):
+class Decoder_AE_Conv(BaseDecoder_PT):
     def __init__(self, args):
-        BaseDecoder.__init__(self)
+        BaseDecoder_PT.__init__(self)
         self.input_dim = args.input_dim
         self.latent_dim = args.latent_dim
         self.n_channels = 1
@@ -351,9 +351,9 @@ class Metric_Custom(BaseMetric):
         BaseMetric.__init__(self)
 
 
-class Encoder_AE_MLP_Custom(BaseEncoder):
+class Encoder_AE_MLP_Custom(BaseEncoder_PT):
     def __init__(self, args: dict):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
 
         if args.input_dim is None:
             raise AttributeError(
@@ -379,9 +379,9 @@ class Encoder_AE_MLP_Custom(BaseEncoder):
         return output
 
 
-class Encoder_VAE_MLP_Custom(BaseEncoder):
+class Encoder_VAE_MLP_Custom(BaseEncoder_PT):
     def __init__(self, args: dict):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
 
         if args.input_dim is None:
             raise AttributeError(
@@ -408,9 +408,9 @@ class Encoder_VAE_MLP_Custom(BaseEncoder):
         return output
 
 
-class Decoder_MLP_Custom(BaseDecoder):
+class Decoder_MLP_Custom(BaseDecoder_PT):
     def __init__(self, args: dict):
-        BaseDecoder.__init__(self)
+        BaseDecoder_PT.__init__(self)
 
         if args.input_dim is None:
             raise AttributeError(
@@ -532,9 +532,9 @@ class Discriminator_MLP_Custom(BaseDiscriminator):
         return output
 
 
-class EncoderWrongInputDim(BaseEncoder):
+class EncoderWrongInputDim(BaseEncoder_PT):
     def __init__(self, args):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
         self.input_dim = args.input_dim
         self.fc = nn.Linear(int(np.prod(args.input_dim)) - 1, args.latent_dim)
 
@@ -545,9 +545,9 @@ class EncoderWrongInputDim(BaseEncoder):
         return output
 
 
-class DecoderWrongInputDim(BaseDecoder):
+class DecoderWrongInputDim(BaseDecoder_PT):
     def __init__(self, args):
-        BaseDecoder.__init__(self)
+        BaseDecoder_PT.__init__(self)
         self.latent_dim = args.latent_dim
         self.fc = nn.Linear(args.latent_dim - 1, int(np.prod(args.input_dim)))
 
@@ -569,9 +569,9 @@ class MetricWrongInputDim(BaseMetric):
         return output
 
 
-class EncoderWrongOutputDim(BaseEncoder):
+class EncoderWrongOutputDim(BaseEncoder_PT):
     def __init__(self, args):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
         self.input_dim = args.input_dim
         self.fc = nn.Linear(int(np.prod(args.input_dim)), args.latent_dim - 1)
 
@@ -580,9 +580,9 @@ class EncoderWrongOutputDim(BaseEncoder):
         return output
 
 
-class DecoderWrongOutputDim(BaseDecoder):
+class DecoderWrongOutputDim(BaseDecoder_PT):
     def __init__(self, args):
-        BaseDecoder.__init__(self)
+        BaseDecoder_PT.__init__(self)
         self.latent_dim = args.latent_dim
         self.fc = nn.Linear(args.latent_dim, int(np.prod(args.input_dim)) - 1)
 
@@ -604,9 +604,9 @@ class MetricWrongOutputDim(BaseMetric):
         return output
 
 
-class EncoderWrongOutput(BaseEncoder):
+class EncoderWrongOutput(BaseEncoder_PT):
     def __init__(self, args):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
         self.input_dim = args.input_dim
         self.fc = nn.Linear(int(np.prod(args.input_dim)), args.latent_dim)
 
@@ -617,9 +617,9 @@ class EncoderWrongOutput(BaseEncoder):
         return output
 
 
-class DecoderWrongOutput(BaseDecoder):
+class DecoderWrongOutput(BaseDecoder_PT):
     def __init__(self, args):
-        BaseDecoder.__init__(self)
+        BaseDecoder_PT.__init__(self)
         self.latent_dim = args.latent_dim
         self.fc = nn.Linear(args.latent_dim, int(np.prod(args.input_dim)))
 

@@ -16,7 +16,7 @@ import torch.nn as nn
 from ...customexception import BadInheritanceError
 from ...data.datasets import BaseDataset, DatasetOutput
 from ..auto_model import AutoConfig
-from ..nn import BaseDecoder, BaseEncoder
+from ..nn import BaseDecoder, BaseEncoder, BaseDecoder_PT, BaseEncoder_PT
 from ..nn.default_architectures import Decoder_AE_MLP
 from .base_config import BaseAEConfig, EnvironmentConfig
 from .base_utils import (
@@ -39,12 +39,12 @@ class BaseAE(nn.Module):
         model_config (BaseAEConfig): An instance of BaseAEConfig in which any model's parameters is
             made available.
 
-        encoder (BaseEncoder): An instance of BaseEncoder (inheriting from `torch.nn.Module` which
+        encoder (BaseEncoder_PT): An instance of BaseEncoder_PT (inheriting from `torch.nn.Module` which
             plays the role of encoder. This argument allows you to use your own neural networks
             architectures if desired. If None is provided, a simple Multi Layer Preception
             (https://en.wikipedia.org/wiki/Multilayer_perceptron) is used. Default: None.
 
-        decoder (BaseDecoder): An instance of BaseDecoder (inheriting from `torch.nn.Module` which
+        decoder (BaseDecoder_PT): An instance of BaseDecoder_PT (inheriting from `torch.nn.Module` which
             plays the role of decoder. This argument allows you to use your own neural networks
             architectures if desired. If None is provided, a simple Multi Layer Preception
             (https://en.wikipedia.org/wiki/Multilayer_perceptron) is used. Default: None.
@@ -57,8 +57,8 @@ class BaseAE(nn.Module):
     def __init__(
         self,
         model_config: BaseAEConfig,
-        encoder: Optional[BaseEncoder] = None,
-        decoder: Optional[BaseDecoder] = None,
+        encoder: Optional[BaseEncoder_PT] = None,
+        decoder: Optional[BaseDecoder_PT] = None,
     ):
         nn.Module.__init__(self)
 
@@ -528,24 +528,24 @@ class BaseAE(nn.Module):
 
             return model
 
-    def set_encoder(self, encoder: BaseEncoder) -> None:
+    def set_encoder(self, encoder: BaseEncoder_PT) -> None:
         """Set the encoder of the model"""
-        if not issubclass(type(encoder), BaseEncoder):
+        if not issubclass(type(encoder), BaseEncoder_PT):
             raise BadInheritanceError(
                 (
-                    "Encoder must inherit from BaseEncoder class from "
-                    "pythae.models.base_architectures.BaseEncoder. Refer to documentation."
+                    "Encoder must inherit from BaseEncoder_PT class from "
+                    "pythae.models.base_architectures.BaseEncoder_PT. Refer to documentation."
                 )
             )
         self.encoder = encoder
 
-    def set_decoder(self, decoder: BaseDecoder) -> None:
+    def set_decoder(self, decoder: BaseDecoder_PT) -> None:
         """Set the decoder of the model"""
-        if not issubclass(type(decoder), BaseDecoder):
+        if not issubclass(type(decoder), BaseDecoder_PT):
             raise BadInheritanceError(
                 (
-                    "Decoder must inherit from BaseDecoder class from "
-                    "pythae.models.base_architectures.BaseDecoder. Refer to documentation."
+                    "Decoder must inherit from BaseDecoder_PT class from "
+                    "pythae.models.base_architectures.BaseDecoder_PT. Refer to documentation."
                 )
             )
         self.decoder = decoder

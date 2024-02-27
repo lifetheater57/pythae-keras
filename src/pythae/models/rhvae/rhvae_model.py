@@ -16,7 +16,7 @@ from torch.autograd import grad
 from ...customexception import BadInheritanceError
 from ...data.datasets import BaseDataset
 from ..base.base_utils import CPU_Unpickler, ModelOutput, hf_hub_is_available
-from ..nn import BaseDecoder, BaseEncoder, BaseMetric
+from ..nn import BaseDecoder_PT, BaseEncoder_PT, BaseMetric
 from ..nn.default_architectures import Metric_MLP
 from ..vae import VAE
 from .rhvae_config import RHVAEConfig
@@ -36,12 +36,12 @@ class RHVAE(VAE):
     Args:
         model_config (RHVAEConfig): A model configuration setting the main parameters of the model.
 
-        encoder (BaseEncoder): An instance of BaseEncoder (inheriting from `torch.nn.Module` which
+        encoder (BaseEncoder_PT): An instance of BaseEncoder_PT (inheriting from `torch.nn.Module` which
             plays the role of encoder. This argument allows you to use your own neural networks
             architectures if desired. If None is provided, a simple Multi Layer Preception
             (https://en.wikipedia.org/wiki/Multilayer_perceptron) is used. Default: None.
 
-        decoder (BaseDecoder): An instance of BaseDecoder (inheriting from `torch.nn.Module` which
+        decoder (BaseDecoder_PT): An instance of BaseDecoder_PT (inheriting from `torch.nn.Module` which
             plays the role of decoder. This argument allows you to use your own neural networks
             architectures if desired. If None is provided, a simple Multi Layer Preception
             (https://en.wikipedia.org/wiki/Multilayer_perceptron) is used. Default: None.
@@ -55,8 +55,8 @@ class RHVAE(VAE):
     def __init__(
         self,
         model_config: RHVAEConfig,
-        encoder: Optional[BaseEncoder] = None,
-        decoder: Optional[BaseDecoder] = None,
+        encoder: Optional[BaseEncoder_PT] = None,
+        decoder: Optional[BaseDecoder_PT] = None,
         metric: Optional[BaseMetric] = None,
     ):
         VAE.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)

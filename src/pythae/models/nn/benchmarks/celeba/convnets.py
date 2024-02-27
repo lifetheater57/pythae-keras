@@ -5,14 +5,12 @@ from typing import List
 import torch
 import torch.nn as nn
 
-from pythae.models.nn import BaseDecoder, BaseDiscriminator, BaseEncoder
-
 from ....base import BaseAEConfig
 from ....base.base_utils import ModelOutput
-from ...base_architectures import BaseDecoder, BaseEncoder
+from ....nn import BaseDecoder_PT, BaseEncoder_PT, BaseDiscriminator
 
 
-class Encoder_Conv_AE_CELEBA(BaseEncoder):
+class Encoder_Conv_AE_CELEBA(BaseEncoder_PT):
     """
     A Convolutional encoder Neural net suited for CELEBA-64 and Autoencoder-based models.
 
@@ -76,7 +74,7 @@ class Encoder_Conv_AE_CELEBA(BaseEncoder):
     """
 
     def __init__(self, args: BaseAEConfig):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
 
         self.input_dim = (3, 64, 64)
         self.latent_dim = args.latent_dim
@@ -159,7 +157,7 @@ class Encoder_Conv_AE_CELEBA(BaseEncoder):
         return output
 
 
-class Encoder_Conv_VAE_CELEBA(BaseEncoder):
+class Encoder_Conv_VAE_CELEBA(BaseEncoder_PT):
     """
     A Convolutional encoder Neural net suited for CELEBA-64 and
     Variational Autoencoder-based models.
@@ -229,7 +227,7 @@ class Encoder_Conv_VAE_CELEBA(BaseEncoder):
     """
 
     def __init__(self, args: BaseAEConfig):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
 
         self.input_dim = (3, 64, 64)
         self.latent_dim = args.latent_dim
@@ -317,7 +315,7 @@ class Encoder_Conv_VAE_CELEBA(BaseEncoder):
         return output
 
 
-class Encoder_Conv_SVAE_CELEBA(BaseEncoder):
+class Encoder_Conv_SVAE_CELEBA(BaseEncoder_PT):
     """
     A Convolutional encoder Neural net suited for CELEBA-64 and Hyperspherical autoencoder
     Variational Autoencoder.
@@ -387,7 +385,7 @@ class Encoder_Conv_SVAE_CELEBA(BaseEncoder):
     """
 
     def __init__(self, args: BaseAEConfig):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
 
         self.input_dim = (3, 64, 64)
         self.latent_dim = args.latent_dim
@@ -477,7 +475,7 @@ class Encoder_Conv_SVAE_CELEBA(BaseEncoder):
         return output
 
 
-class Decoder_Conv_AE_CELEBA(BaseDecoder):
+class Decoder_Conv_AE_CELEBA(BaseDecoder_PT):
     """
     A Convolutional decoder Neural net suited for CELEBA-64 and Autoencoder-based
     models.
@@ -540,7 +538,7 @@ class Decoder_Conv_AE_CELEBA(BaseDecoder):
     """
 
     def __init__(self, args: dict):
-        BaseDecoder.__init__(self)
+        BaseDecoder_PT.__init__(self)
         self.input_dim = (3, 64, 64)
         self.latent_dim = args.latent_dim
         self.n_channels = 3

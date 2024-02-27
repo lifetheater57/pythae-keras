@@ -13,7 +13,7 @@ from torchvision import transforms
 from pythae.data.datasets import DatasetOutput
 from pythae.models import VQVAE, VQVAEConfig
 from pythae.models.base.base_utils import ModelOutput
-from pythae.models.nn.base_architectures import BaseDecoder, BaseEncoder
+from pythae.models.nn import BaseDecoder_PT, BaseEncoder_PT
 from pythae.models.nn.benchmarks.utils import ResBlock
 from pythae.trainers import BaseTrainer, BaseTrainerConfig
 
@@ -46,9 +46,9 @@ ap.add_argument(
 args = ap.parse_args()
 
 
-class Encoder_ResNet_VQVAE_FFHQ(BaseEncoder):
+class Encoder_ResNet_VQVAE_FFHQ(BaseEncoder_PT):
     def __init__(self, args):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
 
         self.latent_dim = args.latent_dim
         self.n_channels = 3
@@ -76,9 +76,9 @@ class Encoder_ResNet_VQVAE_FFHQ(BaseEncoder):
         return output
 
 
-class Decoder_ResNet_VQVAE_FFHQ(BaseDecoder):
+class Decoder_ResNet_VQVAE_FFHQ(BaseDecoder_PT):
     def __init__(self, args):
-        BaseDecoder.__init__(self)
+        BaseDecoder_PT.__init__(self)
 
         self.latent_dim = args.latent_dim
         self.n_channels = 3

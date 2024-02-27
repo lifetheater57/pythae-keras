@@ -11,15 +11,15 @@ from ...data.datasets import collate_dataset_output
 from ...data.preprocessors import DataProcessor
 from ...models import VAE, VAEConfig
 from ...models.base.base_utils import ModelOutput
-from ...models.nn import BaseDecoder, BaseEncoder
+from ...models.nn import BaseDecoder_PT, BaseEncoder_PT
 from ...trainers import BaseTrainer, BaseTrainerConfig
 from ..base import BaseSampler
 from .two_stage_sampler_config import TwoStageVAESamplerConfig
 
 
-class SecondEncoder(BaseEncoder):
+class SecondEncoder(BaseEncoder_PT):
     def __init__(self, model: VAE, sampler_config: TwoStageVAESamplerConfig):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
 
         layers = []
 
@@ -52,9 +52,9 @@ class SecondEncoder(BaseEncoder):
         return output
 
 
-class SecondDecoder(BaseDecoder):
+class SecondDecoder(BaseDecoder_PT):
     def __init__(self, model: VAE, sampler_config: TwoStageVAESamplerConfig):
-        BaseDecoder.__init__(self)
+        BaseDecoder_PT.__init__(self)
 
         self.gamma_z = nn.Parameter(torch.ones(1, 1), requires_grad=True)
 

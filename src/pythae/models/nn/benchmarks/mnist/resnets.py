@@ -7,11 +7,11 @@ import torch.nn as nn
 
 from ....base import BaseAEConfig
 from ....base.base_utils import ModelOutput
-from ...base_architectures import BaseDecoder, BaseEncoder
+from ....nn import BaseDecoder_PT, BaseEncoder_PT
 from ..utils import ResBlock
 
 
-class Encoder_ResNet_AE_MNIST(BaseEncoder):
+class Encoder_ResNet_AE_MNIST(BaseEncoder_PT):
     """
     A ResNet encoder suited for MNIST and Autoencoder-based models.
 
@@ -82,7 +82,7 @@ class Encoder_ResNet_AE_MNIST(BaseEncoder):
     """
 
     def __init__(self, args: BaseAEConfig):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
 
         self.input_dim = (1, 28, 28)
         self.latent_dim = args.latent_dim
@@ -152,7 +152,7 @@ class Encoder_ResNet_AE_MNIST(BaseEncoder):
         return output
 
 
-class Encoder_ResNet_VAE_MNIST(BaseEncoder):
+class Encoder_ResNet_VAE_MNIST(BaseEncoder_PT):
     """
     A ResNet encoder suited for MNIST and Variational Autoencoder-based models.
 
@@ -223,7 +223,7 @@ class Encoder_ResNet_VAE_MNIST(BaseEncoder):
     """
 
     def __init__(self, args: BaseAEConfig):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
 
         self.input_dim = (1, 28, 28)
         self.latent_dim = args.latent_dim
@@ -295,7 +295,7 @@ class Encoder_ResNet_VAE_MNIST(BaseEncoder):
         return output
 
 
-class Encoder_ResNet_SVAE_MNIST(BaseEncoder):
+class Encoder_ResNet_SVAE_MNIST(BaseEncoder_PT):
     """
     A ResNet encoder suited for MNIST and Hyperspherical VAE models.
 
@@ -365,7 +365,7 @@ class Encoder_ResNet_SVAE_MNIST(BaseEncoder):
     """
 
     def __init__(self, args: BaseAEConfig):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
 
         self.input_dim = (1, 28, 28)
         self.latent_dim = args.latent_dim
@@ -439,7 +439,7 @@ class Encoder_ResNet_SVAE_MNIST(BaseEncoder):
         return output
 
 
-class Encoder_ResNet_VQVAE_MNIST(BaseEncoder):
+class Encoder_ResNet_VQVAE_MNIST(BaseEncoder_PT):
     """
     A ResNet encoder suited for MNIST and Vector Quantized VAE models.
 
@@ -508,7 +508,7 @@ class Encoder_ResNet_VQVAE_MNIST(BaseEncoder):
     """
 
     def __init__(self, args: BaseAEConfig):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
 
         self.input_dim = (1, 28, 28)
         self.latent_dim = args.latent_dim
@@ -578,7 +578,7 @@ class Encoder_ResNet_VQVAE_MNIST(BaseEncoder):
         return output
 
 
-class Decoder_ResNet_AE_MNIST(BaseDecoder):
+class Decoder_ResNet_AE_MNIST(BaseDecoder_PT):
     """
     A ResNet decoder suited for MNIST and Autoencoder-based
     models.
@@ -647,7 +647,7 @@ class Decoder_ResNet_AE_MNIST(BaseDecoder):
     """
 
     def __init__(self, args: BaseAEConfig):
-        BaseDecoder.__init__(self)
+        BaseDecoder_PT.__init__(self)
 
         self.input_dim = (1, 28, 28)
         self.latent_dim = args.latent_dim
@@ -735,7 +735,7 @@ class Decoder_ResNet_AE_MNIST(BaseDecoder):
         return output
 
 
-class Decoder_ResNet_VQVAE_MNIST(BaseDecoder):
+class Decoder_ResNet_VQVAE_MNIST(BaseDecoder_PT):
     """
     A ResNet decoder suited for MNIST and Vector Quantized VAE models.
 
@@ -801,7 +801,7 @@ class Decoder_ResNet_VQVAE_MNIST(BaseDecoder):
     """
 
     def __init__(self, args: BaseAEConfig):
-        BaseDecoder.__init__(self)
+        BaseDecoder_PT.__init__(self)
 
         self.input_dim = (1, 28, 28)
         self.latent_dim = args.latent_dim

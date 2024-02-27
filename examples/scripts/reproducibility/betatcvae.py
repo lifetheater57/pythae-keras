@@ -9,7 +9,7 @@ import torch.nn as nn
 from pythae.data.preprocessors import DataProcessor
 from pythae.models import BetaTCVAE, BetaTCVAEConfig
 from pythae.models.base.base_utils import ModelOutput
-from pythae.models.nn import BaseDecoder, BaseEncoder
+from pythae.models.nn import BaseDecoder_PT, BaseEncoder_PT
 from pythae.trainers import BaseTrainer, BaseTrainerConfig
 
 logger = logging.getLogger(__name__)
@@ -20,7 +20,7 @@ logger.setLevel(logging.INFO)
 PATH = os.path.dirname(os.path.abspath(__file__))
 
 ### Define paper encoder network
-class Encoder(BaseEncoder):
+class Encoder(BaseEncoder_PT):
     def __init__(self, args: dict):
         super(Encoder, self).__init__()
         self.input_dim = args.input_dim
@@ -76,9 +76,9 @@ class Encoder(BaseEncoder):
 
 
 ### Define paper decoder network
-class Decoder(BaseDecoder):
+class Decoder(BaseDecoder_PT):
     def __init__(self, args: dict):
-        BaseDecoder.__init__(self)
+        BaseDecoder_PT.__init__(self)
 
         self.input_dim = args.input_dim
         self.latent_dim = args.latent_dim

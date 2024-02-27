@@ -5,14 +5,12 @@ from typing import List
 import torch
 import torch.nn as nn
 
-from pythae.models.nn import BaseDecoder, BaseDiscriminator, BaseEncoder
-
 from ....base import BaseAEConfig
 from ....base.base_utils import ModelOutput
-from ...base_architectures import BaseDecoder, BaseEncoder
+from ....nn import BaseDecoder_PT, BaseEncoder_PT, BaseDiscriminator
 
 
-class Encoder_Conv_AE_MNIST(BaseEncoder):
+class Encoder_Conv_AE_MNIST(BaseEncoder_PT):
     """
     A Convolutional encoder suited for MNIST and Autoencoder-based models.
 
@@ -76,7 +74,7 @@ class Encoder_Conv_AE_MNIST(BaseEncoder):
     """
 
     def __init__(self, args: BaseAEConfig):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
 
         self.input_dim = (1, 28, 28)
         self.latent_dim = args.latent_dim
@@ -159,7 +157,7 @@ class Encoder_Conv_AE_MNIST(BaseEncoder):
         return output
 
 
-class Encoder_Conv_VAE_MNIST(BaseEncoder):
+class Encoder_Conv_VAE_MNIST(BaseEncoder_PT):
     """
     A Convolutional encoder suited for MNIST and Variational Autoencoder-based
     models.
@@ -228,7 +226,7 @@ class Encoder_Conv_VAE_MNIST(BaseEncoder):
     """
 
     def __init__(self, args: BaseAEConfig):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
 
         self.input_dim = (1, 28, 28)
         self.latent_dim = args.latent_dim
@@ -315,7 +313,7 @@ class Encoder_Conv_VAE_MNIST(BaseEncoder):
         return output
 
 
-class Encoder_Conv_SVAE_MNIST(BaseEncoder):
+class Encoder_Conv_SVAE_MNIST(BaseEncoder_PT):
     """
     A Convolutional encoder suited for mnist and Hyperspherical autoencoder
     Variational Autoencoder.
@@ -384,7 +382,7 @@ class Encoder_Conv_SVAE_MNIST(BaseEncoder):
     """
 
     def __init__(self, args: BaseAEConfig):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
 
         self.input_dim = (1, 28, 28)
         self.latent_dim = args.latent_dim
@@ -473,7 +471,7 @@ class Encoder_Conv_SVAE_MNIST(BaseEncoder):
         return output
 
 
-class Decoder_Conv_AE_MNIST(BaseDecoder):
+class Decoder_Conv_AE_MNIST(BaseDecoder_PT):
     """
     A Convolutional decoder suited for MNIST and Autoencoder-based
     models.
@@ -527,7 +525,7 @@ class Decoder_Conv_AE_MNIST(BaseDecoder):
     """
 
     def __init__(self, args: dict):
-        BaseDecoder.__init__(self)
+        BaseDecoder_PT.__init__(self)
         self.input_dim = (1, 28, 28)
         self.latent_dim = args.latent_dim
         self.n_channels = 1

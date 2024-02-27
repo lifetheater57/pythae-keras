@@ -10,7 +10,7 @@ from torch.utils.data import Dataset
 from pythae.data.datasets import DatasetOutput
 from pythae.models import CIWAE, AutoModel, CIWAEConfig
 from pythae.models.base.base_utils import ModelOutput
-from pythae.models.nn import BaseDecoder, BaseEncoder
+from pythae.models.nn import BaseDecoder_PT, BaseEncoder_PT
 from pythae.trainers import BaseTrainer, BaseTrainerConfig
 
 logger = logging.getLogger(__name__)
@@ -30,9 +30,9 @@ def unif_init(m, n_in, n_out):
 
 
 ### Define paper encoder network
-class Encoder(BaseEncoder):
+class Encoder(BaseEncoder_PT):
     def __init__(self, args: dict):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
         self.input_dim = args.input_dim
         self.latent_dim = args.latent_dim
 
@@ -58,9 +58,9 @@ class Encoder(BaseEncoder):
 
 
 ### Define paper decoder network
-class Decoder(BaseDecoder):
+class Decoder(BaseDecoder_PT):
     def __init__(self, args: dict):
-        BaseDecoder.__init__(self)
+        BaseDecoder_PT.__init__(self)
 
         self.input_dim = args.input_dim
         self.latent_dim = args.latent_dim

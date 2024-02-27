@@ -4,14 +4,14 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from pythae.models.nn import BaseDecoder, BaseDiscriminator, BaseEncoder, BaseMetric
+from . import BaseDecoder, BaseEncoder, BaseDecoder_PT, BaseEncoder_PT, BaseDiscriminator, BaseMetric
 
 from ..base.base_utils import ModelOutput
 
 
-class Encoder_AE_MLP(BaseEncoder):
+class Encoder_AE_MLP(BaseEncoder_PT):
     def __init__(self, args: dict):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
         self.input_dim = args.input_dim
         self.latent_dim = args.latent_dim
 
@@ -57,9 +57,9 @@ class Encoder_AE_MLP(BaseEncoder):
         return output
 
 
-class Encoder_VAE_MLP(BaseEncoder):
+class Encoder_VAE_MLP_PT(BaseEncoder_PT):
     def __init__(self, args: dict):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
         self.input_dim = args.input_dim
         self.latent_dim = args.latent_dim
 
@@ -107,9 +107,9 @@ class Encoder_VAE_MLP(BaseEncoder):
         return output
 
 
-class Encoder_SVAE_MLP(BaseEncoder):
+class Encoder_SVAE_MLP(BaseEncoder_PT):
     def __init__(self, args: dict):
-        BaseEncoder.__init__(self)
+        BaseEncoder_PT.__init__(self)
         self.input_dim = args.input_dim
         self.latent_dim = args.latent_dim
 
@@ -157,9 +157,9 @@ class Encoder_SVAE_MLP(BaseEncoder):
         return output
 
 
-class Decoder_AE_MLP(BaseDecoder):
+class Decoder_AE_MLP(BaseDecoder_PT):
     def __init__(self, args: dict):
-        BaseDecoder.__init__(self)
+        BaseDecoder_PT.__init__(self)
 
         self.input_dim = args.input_dim
 

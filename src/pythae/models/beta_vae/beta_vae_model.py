@@ -6,7 +6,7 @@ import torch.nn.functional as F
 
 from ...data.datasets import BaseDataset
 from ..base.base_utils import ModelOutput
-from ..nn import BaseDecoder, BaseEncoder
+from ..nn import BaseDecoder_PT, BaseEncoder_PT
 from ..vae import VAE
 from .beta_vae_config import BetaVAEConfig
 
@@ -19,12 +19,12 @@ class BetaVAE(VAE):
         model_config (BetaVAEConfig): The Variational Autoencoder configuration setting the main
             parameters of the model.
 
-        encoder (BaseEncoder): An instance of BaseEncoder (inheriting from `torch.nn.Module` which
+        encoder (BaseEncoder_PT): An instance of BaseEncoder_PT (inheriting from `torch.nn.Module` which
             plays the role of encoder. This argument allows you to use your own neural networks
             architectures if desired. If None is provided, a simple Multi Layer Preception
             (https://en.wikipedia.org/wiki/Multilayer_perceptron) is used. Default: None.
 
-        decoder (BaseDecoder): An instance of BaseDecoder (inheriting from `torch.nn.Module` which
+        decoder (BaseDecoder_PT): An instance of BaseDecoder_PT (inheriting from `torch.nn.Module` which
             plays the role of decoder. This argument allows you to use your own neural networks
             architectures if desired. If None is provided, a simple Multi Layer Preception
             (https://en.wikipedia.org/wiki/Multilayer_perceptron) is used. Default: None.
@@ -37,8 +37,8 @@ class BetaVAE(VAE):
     def __init__(
         self,
         model_config: BetaVAEConfig,
-        encoder: Optional[BaseEncoder] = None,
-        decoder: Optional[BaseDecoder] = None,
+        encoder: Optional[BaseEncoder_PT] = None,
+        decoder: Optional[BaseDecoder_PT] = None,
     ):
         VAE.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
 
