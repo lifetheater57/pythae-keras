@@ -1,12 +1,17 @@
 import torch
 import torch.nn as nn
 
+import keras
 
-class BaseEncoder(nn.Module):
+
+class BaseEncoder(keras.Model):
     """This is a base class for Encoders neural networks."""
 
     def __init__(self):
-        nn.Module.__init__(self)
+        super().__init__()
+
+    def call(self, inputs):
+        return self.forward(inputs)
 
     def forward(self, x):
         r"""This function must be implemented in a child class.
@@ -44,13 +49,16 @@ class BaseEncoder(nn.Module):
         raise NotImplementedError()
 
 
-class BaseDecoder(nn.Module):
+class BaseDecoder(keras.Model):
     """This is a base class for Decoders neural networks."""
 
     def __init__(self):
-        nn.Module.__init__(self)
+        super().__init__()
 
-    def forward(self, z: torch.Tensor):
+    def call(self, z):
+        return self.forward(z)
+    
+    def forward(self, z):#: torch.Tensor):
         r"""This function must be implemented in a child class.
         It takes the input data and returns an instance of
         :class:`~pythae.models.base.base_utils.ModelOutput`.
