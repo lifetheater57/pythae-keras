@@ -6,11 +6,11 @@ import torch.nn.functional as F
 from ...data.datasets import BaseDataset
 from ..base.base_utils import ModelOutput
 from ..nn import BaseDecoder_PT, BaseEncoder_PT
-from ..vae import VAE
+from ..vae import VAE_PT
 from .piwae_config import PIWAEConfig
 
 
-class PIWAE(VAE):
+class PIWAE(VAE_PT):
     """
     Partially Importance Weighted Autoencoder model.
 
@@ -39,7 +39,7 @@ class PIWAE(VAE):
         encoder: Optional[BaseEncoder_PT] = None,
         decoder: Optional[BaseDecoder_PT] = None,
     ):
-        VAE.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
+        VAE_PT.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
 
         self.model_name = "PIWAE"
         self.gradient_n_estimates = model_config.number_gradient_estimates

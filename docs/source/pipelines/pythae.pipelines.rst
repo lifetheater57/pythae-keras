@@ -28,7 +28,7 @@ instance.
 .. code-block::
 
     >>> from pythae.pipelines import TrainingPipeline
-    >>> from pythae.models import VAE, VAEConfig
+    >>> from pythae.models import VAE_PT, VAEConfig
     >>> from pythae.trainers import BaseTrainerConfig
 
     >>> # Set up the training configuration
@@ -46,7 +46,7 @@ instance.
     ...	    latent_dim=10
     ... )
     >>> # Build the model
-    >>> my_vae_model = VAE(
+    >>> my_vae_model = VAE_PT(
     ...	    model_config=my_vae_config
     ... )
     >>> # Build the Pipeline

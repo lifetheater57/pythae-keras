@@ -8,11 +8,11 @@ import torch.nn.functional as F
 from ...data.datasets import BaseDataset
 from ..base.base_utils import ModelOutput
 from ..nn import BaseDecoder_PT, BaseEncoder_PT
-from ..vae import VAE
+from ..vae import VAE_PT
 from .beta_tc_vae_config import BetaTCVAEConfig
 
 
-class BetaTCVAE(VAE):
+class BetaTCVAE(VAE_PT):
     r"""
     :math:`\beta`-TCVAE model.
 
@@ -41,7 +41,7 @@ class BetaTCVAE(VAE):
         encoder: Optional[BaseEncoder_PT] = None,
         decoder: Optional[BaseDecoder_PT] = None,
     ):
-        VAE.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
+        VAE_PT.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
 
         self.model_name = "BetaTCVAE"
         self.alpha = model_config.alpha
@@ -51,7 +51,7 @@ class BetaTCVAE(VAE):
 
     def forward(self, inputs: BaseDataset, **kwargs):
         """
-        The VAE model
+        The VAE_PT model
 
         Args:
             inputs (BaseDataset): The training dataset with labels

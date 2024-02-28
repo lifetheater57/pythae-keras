@@ -9,11 +9,11 @@ from ...data.datasets import BaseDataset
 from ..base.base_utils import ModelOutput
 from ..nn import BaseDecoder_PT, BaseEncoder_PT
 from ..normalizing_flows import IAF, IAFConfig
-from ..vae import VAE
+from ..vae import VAE_PT
 from .vae_iaf_config import VAE_IAF_Config
 
 
-class VAE_IAF(VAE):
+class VAE_IAF(VAE_PT):
     """Variational Auto Encoder with Inverse Autoregressive Flows
     (:class:`~pythae.models.normalizing_flows.IAF`).
 
@@ -42,7 +42,7 @@ class VAE_IAF(VAE):
         encoder: Optional[BaseEncoder_PT] = None,
         decoder: Optional[BaseDecoder_PT] = None,
     ):
-        VAE.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
+        VAE_PT.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
 
         self.model_name = "VAE_IAF"
 

@@ -202,8 +202,8 @@ class Encoder_Conv_VAE_CELEBA(BaseEncoder_PT):
 
     and then passed to a :class:`pythae.models` instance
 
-        >>> from pythae.models import VAE
-        >>> model = VAE(model_config=model_config, encoder=encoder)
+        >>> from pythae.models import VAE_PT
+        >>> model = VAE_PT(model_config=model_config, encoder=encoder)
         >>> model.encoder == encoder
         ... True
 
@@ -519,8 +519,8 @@ class Decoder_Conv_AE_CELEBA(BaseDecoder_PT):
 
     and then passed to a :class:`pythae.models` instance
 
-        >>> from pythae.models import VAE
-        >>> model = VAE(model_config=model_config, decoder=decoder)
+        >>> from pythae.models import VAE_PT
+        >>> model = VAE_PT(model_config=model_config, decoder=decoder)
         >>> model.decoder == decoder
         ... True
 

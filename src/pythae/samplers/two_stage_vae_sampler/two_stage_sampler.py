@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader, Dataset
 
 from ...data.datasets import collate_dataset_output
 from ...data.preprocessors import DataProcessor
-from ...models import VAE, VAEConfig
+from ...models import VAE_PT, VAEConfig
 from ...models.base.base_utils import ModelOutput
 from ...models.nn import BaseDecoder_PT, BaseEncoder_PT
 from ...trainers import BaseTrainer, BaseTrainerConfig
@@ -18,7 +18,7 @@ from .two_stage_sampler_config import TwoStageVAESamplerConfig
 
 
 class SecondEncoder(BaseEncoder_PT):
-    def __init__(self, model: VAE, sampler_config: TwoStageVAESamplerConfig):
+    def __init__(self, model: VAE_PT, sampler_config: TwoStageVAESamplerConfig):
         BaseEncoder_PT.__init__(self)
 
         layers = []
@@ -53,7 +53,7 @@ class SecondEncoder(BaseEncoder_PT):
 
 
 class SecondDecoder(BaseDecoder_PT):
-    def __init__(self, model: VAE, sampler_config: TwoStageVAESamplerConfig):
+    def __init__(self, model: VAE_PT, sampler_config: TwoStageVAESamplerConfig):
         BaseDecoder_PT.__init__(self)
 
         self.gamma_z = nn.Parameter(torch.ones(1, 1), requires_grad=True)
@@ -96,7 +96,7 @@ class TwoStageVAESampler(BaseSampler):
     """Fits a second VAE in the Autoencoder's latent space.
 
     Args:
-        model (VAE): The VAE model to sample from
+        model (VAE_PT): The VAE model to sample from
         sampler_config (TwoStageVAESamplerConfig): A TwoStageVAESamplerConfig instance containing
             the main parameters of the sampler. If None, a pre-defined configuration is used.
             Default: None
@@ -107,10 +107,10 @@ class TwoStageVAESampler(BaseSampler):
         sampler before sampling.
     """
 
-    def __init__(self, model: VAE, sampler_config: TwoStageVAESamplerConfig = None):
-        assert issubclass(model.__class__, VAE), (
+    def __init__(self, model: VAE_PT, sampler_config: TwoStageVAESamplerConfig = None):
+        assert issubclass(model.__class__, VAE_PT), (
             "The TwoStageVAESampler is only"
-            f"applicable for VAE based models. Got {model.__class__}."
+            f"applicable for VAE_PT based models. Got {model.__class__}."
         )
 
         self.is_fitted = False
@@ -125,7 +125,7 @@ class TwoStageVAESampler(BaseSampler):
             reconstruction_loss=sampler_config.reconstruction_loss,
         )
 
-        self.second_vae = VAE(
+        self.second_vae = VAE_PT(
             model_config=second_vae_config,
             encoder=SecondEncoder(model, sampler_config),
             decoder=SecondDecoder(model, sampler_config),
@@ -234,7 +234,7 @@ class TwoStageVAESampler(BaseSampler):
 
         trainer.train()
 
-        self.second_vae = VAE.load_from_folder(
+        self.second_vae = VAE_PT.load_from_folder(
             os.path.join(trainer.training_dir, "final_model")
         ).to(self.device)
 

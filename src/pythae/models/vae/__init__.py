@@ -14,6 +14,6 @@ Available samplers
 """
 
 from .vae_config import VAEConfig
-from .vae_model import VAE
+from .vae_model import VAE, VAE_PT
 
-__all__ = ["VAE", "VAEConfig"]
+__all__ = ["VAE", "VAEConfig", "VAE_PT"]

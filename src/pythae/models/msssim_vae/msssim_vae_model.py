@@ -6,12 +6,12 @@ import torch
 from ...data.datasets import BaseDataset
 from ..base.base_utils import ModelOutput
 from ..nn import BaseDecoder_PT, BaseEncoder_PT
-from ..vae import VAE
+from ..vae import VAE_PT
 from .msssim_vae_config import MSSSIM_VAEConfig
 from .msssim_vae_utils import MSSSIM
 
 
-class MSSSIM_VAE(VAE):
+class MSSSIM_VAE(VAE_PT):
     r"""
     VAE using perseptual similarity metrics model.
 
@@ -40,7 +40,7 @@ class MSSSIM_VAE(VAE):
         encoder: Optional[BaseEncoder_PT] = None,
         decoder: Optional[BaseDecoder_PT] = None,
     ):
-        VAE.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
+        VAE_PT.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
 
         self.model_name = "MSSSIM_VAE"
         self.beta = model_config.beta
@@ -48,7 +48,7 @@ class MSSSIM_VAE(VAE):
 
     def forward(self, inputs: BaseDataset, **kwargs):
         """
-        The VAE model
+        The VAE_PT model
 
         Args:
             inputs (BaseDataset): The training dataset with labels

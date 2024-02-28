@@ -10,11 +10,11 @@ from torch.autograd import grad
 from ...data.datasets import BaseDataset
 from ..base.base_utils import ModelOutput
 from ..nn import BaseDecoder_PT, BaseEncoder_PT
-from ..vae import VAE
+from ..vae import VAE_PT
 from .hvae_config import HVAEConfig
 
 
-class HVAE(VAE):
+class HVAE(VAE_PT):
     r"""
     Hamiltonian VAE.
 
@@ -42,7 +42,7 @@ class HVAE(VAE):
         encoder: Optional[BaseEncoder_PT] = None,
         decoder: Optional[BaseDecoder_PT] = None,
     ):
-        VAE.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
+        VAE_PT.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
 
         self.model_name = "HVAE"
 

@@ -7,7 +7,7 @@ import torch
 import torch.nn as nn
 
 from pythae.data.preprocessors import DataProcessor
-from pythae.models import VAE, AutoModel, VAEConfig
+from pythae.models import VAE_PT, AutoModel, VAEConfig
 from pythae.models.base.base_utils import ModelOutput
 from pythae.models.nn import BaseDecoder_PT, BaseEncoder_PT
 from pythae.trainers import BaseTrainer, BaseTrainerConfig
@@ -156,7 +156,7 @@ def main():
         input_dim=data_input_dim, latent_dim=40, reconstruction_loss="bce"
     )
 
-    model = VAE(
+    model = VAE_PT(
         model_config=model_config,
         encoder=Encoder(model_config),
         decoder=Decoder(model_config),

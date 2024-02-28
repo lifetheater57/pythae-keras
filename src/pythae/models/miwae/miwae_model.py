@@ -6,11 +6,11 @@ import torch.nn.functional as F
 from ...data.datasets import BaseDataset
 from ..base.base_utils import ModelOutput
 from ..nn import BaseDecoder_PT, BaseEncoder_PT
-from ..vae import VAE
+from ..vae import VAE_PT
 from .miwae_config import MIWAEConfig
 
 
-class MIWAE(VAE):
+class MIWAE(VAE_PT):
     """
     Multiply Importance Weighted Autoencoder model.
 
@@ -39,7 +39,7 @@ class MIWAE(VAE):
         encoder: Optional[BaseEncoder_PT] = None,
         decoder: Optional[BaseDecoder_PT] = None,
     ):
-        VAE.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
+        VAE_PT.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
 
         self.model_name = "MIWAE"
         self.gradient_n_estimates = model_config.number_gradient_estimates
@@ -47,7 +47,7 @@ class MIWAE(VAE):
 
     def forward(self, inputs: BaseDataset, **kwargs):
         """
-        The VAE model
+        The VAE_PT model
 
         Args:
             inputs (BaseDataset): The training dataset with labels

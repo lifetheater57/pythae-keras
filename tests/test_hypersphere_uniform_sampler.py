@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 import torch
 
-from pythae.models import AE, VAE, AEConfig, VAEConfig
+from pythae.models import AE, VAE_PT, AEConfig, VAEConfig
 from pythae.pipelines import GenerationPipeline
 from pythae.samplers import (
     HypersphereUniformSampler,
@@ -23,7 +23,7 @@ def dummy_data():
 
 
 @pytest.fixture(
-    params=[AE(AEConfig(input_dim=(1, 28, 28))), VAE(VAEConfig(input_dim=(1, 28, 28)))]
+    params=[AE(AEConfig(input_dim=(1, 28, 28))), VAE_PT(VAEConfig(input_dim=(1, 28, 28)))]
 )
 def model(request):
     return request.param

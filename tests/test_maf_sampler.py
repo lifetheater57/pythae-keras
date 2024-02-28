@@ -4,7 +4,7 @@ from copy import deepcopy
 import pytest
 import torch
 
-from pythae.models import AE, VAE, AEConfig, VAEConfig
+from pythae.models import AE, VAE_PT, AEConfig, VAEConfig
 from pythae.pipelines import GenerationPipeline
 from pythae.samplers import (
     MAFSampler,
@@ -30,7 +30,7 @@ def dummy_data(request):
 @pytest.fixture(
     params=[
         AE(AEConfig(input_dim=(1, 28, 28), latent_dim=2)),
-        VAE(VAEConfig(input_dim=(1, 28, 28), latent_dim=4)),
+        VAE_PT(VAEConfig(input_dim=(1, 28, 28), latent_dim=4)),
     ]
 )
 def model(request):

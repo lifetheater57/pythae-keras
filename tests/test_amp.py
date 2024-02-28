@@ -5,7 +5,7 @@ import pytest
 import torch
 
 from pythae.customexception import BadInheritanceError
-from pythae.models import VAE, AutoModel, VAEConfig
+from pythae.models import VAE_PT, AutoModel, VAEConfig
 from pythae.models.base.base_utils import ModelOutput
 from pythae.pipelines import GenerationPipeline, TrainingPipeline
 from pythae.samplers import (
@@ -80,16 +80,16 @@ class Test_VAE_Training:
         alpha = request.param
 
         if alpha < 0.25:
-            model = VAE(model_configs)
+            model = VAE_PT(model_configs)
 
         elif 0.25 <= alpha < 0.5:
-            model = VAE(model_configs, encoder=custom_encoder)
+            model = VAE_PT(model_configs, encoder=custom_encoder)
 
         elif 0.5 <= alpha < 0.75:
-            model = VAE(model_configs, decoder=custom_decoder)
+            model = VAE_PT(model_configs, decoder=custom_decoder)
 
         else:
-            model = VAE(model_configs, encoder=custom_encoder, decoder=custom_decoder)
+            model = VAE_PT(model_configs, encoder=custom_encoder, decoder=custom_decoder)
 
         return model
 

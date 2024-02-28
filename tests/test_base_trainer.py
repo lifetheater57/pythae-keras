@@ -5,7 +5,7 @@ import pytest
 import torch
 
 from pythae.customexception import ModelError
-from pythae.models import AE, RHVAE, VAE, AEConfig, RHVAEConfig, VAEConfig
+from pythae.models import AE, RHVAE, VAE_PT, AEConfig, RHVAEConfig, VAEConfig
 from pythae.trainers import BaseTrainer, BaseTrainerConfig
 from tests.data.custom_architectures import *
 
@@ -540,25 +540,25 @@ class Test_Main_Training:
 
         if alpha < 0.25:
             if isinstance(ae_config, VAEConfig):
-                model = VAE(ae_config)
+                model = VAE_PT(ae_config)
             else:
                 model = AE(ae_config)
 
         elif 0.25 <= alpha < 0.5:
             if isinstance(ae_config, VAEConfig):
-                model = VAE(ae_config, encoder=custom_encoder)
+                model = VAE_PT(ae_config, encoder=custom_encoder)
             else:
                 model = AE(ae_config, encoder=custom_encoder)
 
         elif 0.5 <= alpha < 0.75:
             if isinstance(ae_config, VAEConfig):
-                model = VAE(ae_config, decoder=custom_decoder)
+                model = VAE_PT(ae_config, decoder=custom_decoder)
             else:
                 model = AE(ae_config, decoder=custom_decoder)
 
         else:
             if isinstance(ae_config, VAEConfig):
-                model = VAE(ae_config, encoder=custom_encoder, decoder=custom_decoder)
+                model = VAE_PT(ae_config, encoder=custom_encoder, decoder=custom_decoder)
             else:
                 model = AE(ae_config, encoder=custom_encoder, decoder=custom_decoder)
 

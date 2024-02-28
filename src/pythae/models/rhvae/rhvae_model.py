@@ -18,7 +18,7 @@ from ...data.datasets import BaseDataset
 from ..base.base_utils import CPU_Unpickler, ModelOutput, hf_hub_is_available
 from ..nn import BaseDecoder_PT, BaseEncoder_PT, BaseMetric
 from ..nn.default_architectures import Metric_MLP
-from ..vae import VAE
+from ..vae import VAE_PT
 from .rhvae_config import RHVAEConfig
 from .rhvae_utils import create_inverse_metric, create_metric
 
@@ -28,7 +28,7 @@ logger.addHandler(console)
 logger.setLevel(logging.INFO)
 
 
-class RHVAE(VAE):
+class RHVAE(VAE_PT):
     r"""
     Riemannian Hamiltonian VAE model.
 
@@ -59,7 +59,7 @@ class RHVAE(VAE):
         decoder: Optional[BaseDecoder_PT] = None,
         metric: Optional[BaseMetric] = None,
     ):
-        VAE.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
+        VAE_PT.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
 
         self.model_name = "RHVAE"
 

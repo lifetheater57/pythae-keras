@@ -10,12 +10,12 @@ from ...data.datasets import BaseDataset
 from ..base.base_utils import ModelOutput
 from ..nn import BaseDecoder_PT, BaseEncoder_PT
 from ..nn.default_architectures import Encoder_SVAE_MLP, Encoder_VAE_MLP_PT
-from ..vae import VAE
+from ..vae import VAE_PT
 from .pvae_config import PoincareVAEConfig
 from .pvae_utils import PoincareBall, RiemannianNormal, WrappedNormal
 
 
-class PoincareVAE(VAE):
+class PoincareVAE(VAE_PT):
     """Poincaré Variational Autoencoder model.
 
     Args:
@@ -43,7 +43,7 @@ class PoincareVAE(VAE):
         encoder: Optional[BaseEncoder_PT] = None,
         decoder: Optional[BaseDecoder_PT] = None,
     ):
-        VAE.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
+        VAE_PT.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
 
         self.model_name = "PoincareVAE"
 

@@ -23,7 +23,7 @@ Available Autoencoders
     ~pythae.models.BaseAE
     ~pythae.models.AutoModel
     ~pythae.models.AE
-    ~pythae.models.VAE
+    ~pythae.models.VAE_PT
     ~pythae.models.BetaVAE
     ~pythae.models.VAE_LinNF
     ~pythae.models.VAE_IAF
@@ -73,7 +73,7 @@ instance.
 .. code-block::
 
     >>> from pythae.pipelines import TrainingPipeline
-    >>> from pythae.models import VAE, VAEConfig
+    >>> from pythae.models import VAE_PT, VAEConfig
     >>> from pythae.trainers import BaseTrainerConfig
 
     >>> # Set up the training configuration
@@ -95,7 +95,7 @@ instance.
     ...	    latent_dim=10
     ... )
     >>> # Build the model
-    >>> my_vae_model = VAE(
+    >>> my_vae_model = VAE_PT(
     ...	    model_config=my_vae_config
     ... )
     >>> # Build the Pipeline
@@ -142,7 +142,7 @@ Below are indicated the training times for a Vector Quantized VAE (VQ-VAE) with 
 on MNIST on V100 16GB GPU(s), for 50 epochs on `FFHQ <https://github.com/NVlabs/ffhq-dataset>`_ (1024x1024 images) 
 and for 20 epochs on `ImageNet-1k <https://huggingface.co/datasets/imagenet-1k>`_ on V100 32GB GPU(s).
 
-.. list-table:: Training times of a VQ-VAE with Pythae
+.. list-table:: Training times of a VQ-VAE_PT with Pythae
    :widths: 25 25 25 25 25
    :header-rows: 1
 

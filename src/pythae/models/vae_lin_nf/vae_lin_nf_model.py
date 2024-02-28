@@ -15,11 +15,11 @@ from ..normalizing_flows import (
     RadialFlow,
     RadialFlowConfig,
 )
-from ..vae import VAE
+from ..vae import VAE_PT
 from .vae_lin_nf_config import VAE_LinNF_Config
 
 
-class VAE_LinNF(VAE):
+class VAE_LinNF(VAE_PT):
     """Variational Auto Encoder with linear Normalizing Flows model.
 
     Args:
@@ -50,7 +50,7 @@ class VAE_LinNF(VAE):
         encoder: Optional[BaseEncoder_PT] = None,
         decoder: Optional[BaseDecoder_PT] = None,
     ):
-        VAE.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
+        VAE_PT.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
 
         self.model_name = "VAE_LinNF"
 

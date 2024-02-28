@@ -9,12 +9,12 @@ from ...data.datasets import BaseDataset
 from ..base.base_utils import ModelOutput
 from ..nn import BaseDecoder_PT, BaseEncoder_PT
 from ..nn.default_architectures import Encoder_SVAE_MLP
-from ..vae import VAE
+from ..vae import VAE_PT
 from .svae_config import SVAEConfig
 from .svae_utils import ive
 
 
-class SVAE(VAE):
+class SVAE(VAE_PT):
     r"""
     :math:`\mathcal{S}`-VAE model.
 
@@ -43,7 +43,7 @@ class SVAE(VAE):
         encoder: Optional[BaseEncoder_PT] = None,
         decoder: Optional[BaseDecoder_PT] = None,
     ):
-        VAE.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
+        VAE_PT.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
 
         self.model_name = "SVAE"
 

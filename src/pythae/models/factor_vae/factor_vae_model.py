@@ -8,12 +8,12 @@ from ...customexception import BadInheritanceError
 from ...data.datasets import BaseDataset
 from ..base.base_utils import ModelOutput
 from ..nn import BaseDecoder_PT, BaseDiscriminator, BaseEncoder_PT
-from ..vae import VAE
+from ..vae import VAE_PT
 from .factor_vae_config import FactorVAEConfig
 from .factor_vae_utils import FactorVAEDiscriminator
 
 
-class FactorVAE(VAE):
+class FactorVAE(VAE_PT):
     """
     FactorVAE model.
 
@@ -43,7 +43,7 @@ class FactorVAE(VAE):
         encoder: Optional[BaseEncoder_PT] = None,
         decoder: Optional[BaseDecoder_PT] = None,
     ):
-        VAE.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
+        VAE_PT.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
 
         self.discriminator = FactorVAEDiscriminator(latent_dim=model_config.latent_dim)
 
@@ -69,7 +69,7 @@ class FactorVAE(VAE):
 
     def forward(self, inputs: BaseDataset, **kwargs) -> ModelOutput:
         """
-        The VAE model
+        The VAE_PT model
 
         Args:
             inputs (BaseDataset): The training dataset with labels
