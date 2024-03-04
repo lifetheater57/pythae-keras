@@ -16,7 +16,7 @@ class VAMP(VAE_PT):
     """Variational Mixture of Posteriors (VAMP) VAE model
 
     Args:
-        model_config (VAEConfig): The Variational Autoencoder configuration setting the main
+        model_config (VAMPConfig): The Variational Autoencoder configuration setting the main
             parameters of the model.
 
         encoder (BaseEncoder_PT): An instance of BaseEncoder_PT (inheriting from `torch.nn.Module` which
