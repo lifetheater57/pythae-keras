@@ -14,7 +14,7 @@ from ...data.datasets import BaseDataset
 from ..base.base_utils import CPU_Unpickler, ModelOutput, hf_hub_is_available
 from ..nn import BaseDecoder_PT, BaseDiscriminator, BaseEncoder_PT
 from ..nn.default_architectures import Discriminator_MLP
-from ..vae import VAE
+from ..vae import VAE_PT
 from .vae_gan_config import VAEGANConfig
 
 logger = logging.getLogger(__name__)
@@ -23,7 +23,7 @@ logger.addHandler(console)
 logger.setLevel(logging.INFO)
 
 
-class VAEGAN(VAE):
+class VAEGAN(VAE_PT):
     """Variational Autoencoder using Adversarial reconstruction loss model.
 
     Args:
@@ -58,7 +58,7 @@ class VAEGAN(VAE):
         decoder: Optional[BaseDecoder_PT] = None,
         discriminator: Optional[BaseDiscriminator] = None,
     ):
-        VAE.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
+        VAE_PT.__init__(self, model_config=model_config, encoder=encoder, decoder=decoder)
 
         if discriminator is None:
             if model_config.latent_dim is None:
