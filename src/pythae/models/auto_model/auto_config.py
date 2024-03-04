@@ -100,6 +100,11 @@ class AutoConfig(BaseConfig):
 
             model_config = VAEConfig.from_json_file(json_path)
 
+        elif config_name == "VAE_PTConfig":
+            from ..vae import VAE_PTConfig
+
+            model_config = VAE_PTConfig.from_json_file(json_path)
+
         elif config_name == "VAEGANConfig":
             from ..vae_gan import VAEGANConfig
 

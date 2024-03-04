@@ -13,7 +13,7 @@ Available samplers
     :nosignatures:
 """
 
-from .vae_config import VAEConfig
+from .vae_config import VAEConfig, VAE_PTConfig
 from .vae_model import VAE, VAE_PT
 
-__all__ = ["VAE", "VAEConfig", "VAE_PT"]
+__all__ = ["VAE", "VAEConfig", "VAE_PT", "VAE_PTConfig"]

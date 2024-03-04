@@ -114,6 +114,11 @@ class AutoModel(nn.Module):
 
             model = VAE.load_from_folder(dir_path=dir_path)
 
+        elif model_name == "VAE_PTConfig":
+            from ..vae import VAE_PT
+
+            model = VAE_PT.load_from_folder(dir_path=dir_path)
+
         elif model_name == "VAEGANConfig":
             from ..vae_gan import VAEGAN
 
