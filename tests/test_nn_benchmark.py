@@ -67,7 +67,7 @@ class Test_MNIST_Default:
         self, ae_mnist_config, mnist_like_data, recon_layers_default
     ):
         encoder = Encoder_AE_MLP(ae_mnist_config).to(device)
-        decoder = Decoder_AE_MLP(ae_mnist_config).to(device)
+        decoder = Decoder_AE_MLP_PT(ae_mnist_config).to(device)
 
         embedding = encoder(mnist_like_data).embedding
 
@@ -117,8 +117,8 @@ class Test_MNIST_Default:
     def test_vae_encoding_decoding_default(
         self, ae_mnist_config, mnist_like_data, recon_layers_default
     ):
-        encoder = Encoder_VAE_MLP(ae_mnist_config).to(device)
-        decoder = Decoder_AE_MLP(ae_mnist_config).to(device)
+        encoder = Encoder_VAE_MLP_PT(ae_mnist_config).to(device)
+        decoder = Decoder_AE_MLP_PT(ae_mnist_config).to(device)
 
         output = encoder(mnist_like_data)
         embedding, log_covariance = output.embedding, output.log_covariance
@@ -186,7 +186,7 @@ class Test_MNIST_Default:
         self, ae_mnist_config, mnist_like_data, recon_layers_default
     ):
         encoder = Encoder_SVAE_MLP(ae_mnist_config).to(device)
-        decoder = Decoder_AE_MLP(ae_mnist_config).to(device)
+        decoder = Decoder_AE_MLP_PT(ae_mnist_config).to(device)
 
         output = encoder(mnist_like_data)
         embedding, log_concentration = output.embedding, output.log_concentration

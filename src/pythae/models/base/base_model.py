@@ -622,7 +622,7 @@ class BaseAE_PT(nn.Module):
                     "automatically"
                 )
 
-            decoder = Decoder_AE_MLP(model_config)
+            decoder = Decoder_AE_MLP_PT(model_config)
             self.model_config.uses_default_decoder = True
 
         else:
