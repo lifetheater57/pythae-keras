@@ -58,6 +58,7 @@ class BaseDecoder(keras.Model):
     def call(self, z):
         return self.forward(z)
     
+    #TODO: add back type hinting
     def forward(self, z):#: torch.Tensor):
         r"""This function must be implemented in a child class.
         It takes the input data and returns an instance of
