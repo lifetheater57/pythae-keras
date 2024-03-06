@@ -4,6 +4,9 @@ import numpy as np
 import torch
 import torch.nn as nn
 
+import keras
+from keras import layers, ops
+
 from . import BaseDecoder, BaseEncoder, BaseDecoder_PT, BaseEncoder_PT, BaseDiscriminator, BaseMetric
 
 from ..base.base_utils import ModelOutput
@@ -53,6 +56,56 @@ class Encoder_AE_MLP(BaseEncoder_PT):
                     output[f"embedding_layer_{i+1}"] = out
             if i + 1 == self.depth:
                 output["embedding"] = self.embedding(out)
+
+        return output
+
+
+class Encoder_VAE_MLP(BaseEncoder):
+    def __init__(self, args: dict):
+        super().__init__(self)
+        self.input_dim = args.input_dim
+        self.latent_dim = args.latent_dim
+
+        model = keras.Sequential([keras.Input(shape=self.input_dim)])
+
+        model.add(layers.Dense(512, activation="relu"))
+
+        self.layers = model
+        self.depth = len(model.layers)
+
+        self.embedding = layers.Dense(self.latent_dim)
+        self.log_var = layers.Dense(self.latent_dim)
+
+    def forward(self, x, output_layer_levels: List[int] = None):
+        output = ModelOutput()
+
+        max_depth = self.depth
+
+        if output_layer_levels is not None:
+            assert all(
+                self.depth >= levels > 0 or levels == -1
+                for levels in output_layer_levels
+            ), (
+                f"Cannot output layer deeper than depth ({self.depth}). "
+                f"Got ({output_layer_levels})."
+            )
+
+            if -1 in output_layer_levels:
+                max_depth = self.depth
+            else:
+                max_depth = max(output_layer_levels)
+
+        out = layers.Flatten()(x)
+
+        for i in range(max_depth):
+            out = self.layers[i](out)
+
+            if output_layer_levels is not None:
+                if i + 1 in output_layer_levels:
+                    output[f"embedding_layer_{i+1}"] = out
+            if i + 1 == self.depth:
+                output["embedding"] = self.embedding(out)
+                output["log_covariance"] = self.log_var(out)
 
         return output
 
@@ -157,7 +210,56 @@ class Encoder_SVAE_MLP(BaseEncoder_PT):
         return output
 
 
-class Decoder_AE_MLP(BaseDecoder_PT):
+class Decoder_AE_MLP(BaseDecoder):
+    def __init__(self, args: dict):
+        super.__init__(self)
+
+        self.input_dim = args.input_dim
+
+        model = keras.Sequential([keras.Input(shape=args.latent_dim)])
+
+        model.add(layers.Dense(512, activation='relu'))
+
+        model.add(layers.Dense(int(ops.prod(args.input_dim)), activation="sigmoid"))
+
+        self.layers = model
+        self.depth = len(model)
+
+    #TODO: add back type hinting
+    def forward(self, z, output_layer_levels: List[int] = None):
+        output = ModelOutput()
+
+        max_depth = self.depth
+
+        if output_layer_levels is not None:
+            assert all(
+                self.depth >= levels > 0 or levels == -1
+                for levels in output_layer_levels
+            ), (
+                f"Cannot output layer deeper than depth ({self.depth}). "
+                f"Got ({output_layer_levels})."
+            )
+
+            if -1 in output_layer_levels:
+                max_depth = self.depth
+            else:
+                max_depth = max(output_layer_levels)
+
+        out = z
+
+        for i in range(max_depth):
+            out = self.layers[i](out)
+
+            if output_layer_levels is not None:
+                if i + 1 in output_layer_levels:
+                    output[f"reconstruction_layer_{i+1}"] = out
+            if i + 1 == self.depth:
+                output["reconstruction"] = ops.reshape(out, (z.shape[0],) + self.input_dim)
+
+        return output
+
+
+class Decoder_AE_MLP_PT(BaseDecoder_PT):
     def __init__(self, args: dict):
         BaseDecoder_PT.__init__(self)
 
