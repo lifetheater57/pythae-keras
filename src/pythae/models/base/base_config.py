@@ -1,3 +1,4 @@
+import sys
 from typing import Tuple, Union
 
 from pydantic.dataclasses import dataclass
@@ -23,4 +24,4 @@ class BaseAEConfig(BaseConfig):
 
 @dataclass
 class EnvironmentConfig(BaseConfig):
-    python_version: str = "3.8"
+    python_version: str = f"{sys.version_info[0]}.{sys.version_info[1]}"
