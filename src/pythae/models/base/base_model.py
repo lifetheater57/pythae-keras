@@ -14,12 +14,13 @@ import torch
 import torch.nn as nn
 
 import keras
+from keras import ops
 
 from ...customexception import BadInheritanceError
 from ...data.datasets import BaseDataset, DatasetOutput
 from ..auto_model import AutoConfig
 from ..nn import BaseDecoder, BaseEncoder, BaseDecoder_PT, BaseEncoder_PT
-from ..nn.default_architectures import Decoder_AE_MLP
+from ..nn.default_architectures import Decoder_AE_MLP, Decoder_AE_MLP_PT
 from .base_config import BaseAEConfig, EnvironmentConfig
 from .base_utils import (
     CPU_Unpickler,
@@ -41,12 +42,12 @@ class BaseAE(keras.Model):
         model_config (BaseAEConfig): An instance of BaseAEConfig in which any model's parameters is
             made available.
 
-        encoder (BaseEncoder_PT): An instance of BaseEncoder_PT (inheriting from `torch.nn.Module` which
+        encoder (BaseEncoder): An instance of BaseEncoder (inheriting from `torch.nn.Module` which
             plays the role of encoder. This argument allows you to use your own neural networks
             architectures if desired. If None is provided, a simple Multi Layer Preception
             (https://en.wikipedia.org/wiki/Multilayer_perceptron) is used. Default: None.
 
-        decoder (BaseDecoder_PT): An instance of BaseDecoder_PT (inheriting from `torch.nn.Module` which
+        decoder (BaseDecoder): An instance of BaseDecoder (inheriting from `torch.nn.Module` which
             plays the role of decoder. This argument allows you to use your own neural networks
             architectures if desired. If None is provided, a simple Multi Layer Preception
             (https://en.wikipedia.org/wiki/Multilayer_perceptron) is used. Default: None.
@@ -59,8 +60,8 @@ class BaseAE(keras.Model):
     def __init__(
         self,
         model_config: BaseAEConfig,
-        encoder: Optional[BaseEncoder_PT] = None,
-        decoder: Optional[BaseDecoder_PT] = None,
+        encoder: Optional[BaseEncoder] = None,
+        decoder: Optional[BaseDecoder] = None,
     ):
         super().__init__()
 
@@ -70,7 +71,8 @@ class BaseAE(keras.Model):
         self.latent_dim = model_config.latent_dim
 
         self.model_config = model_config
-
+        
+        #TODO: check why default decoder provider, but not encoder
         if decoder is None:
             if model_config.input_dim is None:
                 raise AttributeError(
@@ -109,7 +111,8 @@ class BaseAE(keras.Model):
             ``loss = model_output.loss``"""
         raise NotImplementedError()
 
-    def reconstruct(self, inputs: torch.Tensor):
+    #TODO: add back type hinting
+    def reconstruct(self, inputs):#: torch.Tensor):
         """This function returns the reconstructions of given input data.
 
         Args:
@@ -121,7 +124,8 @@ class BaseAE(keras.Model):
         """
         return self(DatasetOutput(data=inputs)).recon_x
 
-    def embed(self, inputs: torch.Tensor) -> torch.Tensor:
+    #TODO: add back type hinting
+    def embed(self, inputs):#: torch.Tensor) -> torch.Tensor:
         """Return the embeddings of the input data.
 
         Args:
@@ -132,7 +136,8 @@ class BaseAE(keras.Model):
         """
         return self(DatasetOutput(data=inputs)).z
 
-    def predict(self, inputs: torch.Tensor) -> ModelOutput:
+    #TODO: add back type hinting
+    def predict(self, inputs):#: torch.Tensor) -> ModelOutput:
         """The input data is encoded and decoded without computing loss
 
         Args:
@@ -141,6 +146,7 @@ class BaseAE(keras.Model):
         Returns:
             ModelOutput: An instance of ModelOutput containing reconstruction and embedding
         """
+        #TODD: check why called from string or from property name
         z = self.encoder(inputs).embedding
         recon_x = self.decoder(z)["reconstruction"]
 
@@ -151,10 +157,11 @@ class BaseAE(keras.Model):
 
         return output
 
+    #TODO: add back type hinting
     def interpolate(
         self,
-        starting_inputs: torch.Tensor,
-        ending_inputs: torch.Tensor,
+        starting_inputs,#: torch.Tensor,
+        ending_inputs,#: torch.Tensor,
         granularity: int = 10,
     ):
         """This function performs a linear interpolation in the latent space of the autoencoder
@@ -171,15 +178,16 @@ class BaseAE(keras.Model):
             torch.Tensor: A tensor of shape [B x granularity x input_dim] containing the
             interpolation trajectories.
         """
-        assert starting_inputs.shape[0] == ending_inputs.shape[0], (
+        assert ops.shape(starting_inputs)[0] == ops.shape(ending_inputs)[0], (
             "The number of starting_inputs should equal the number of ending_inputs. Got "
-            f"{starting_inputs.shape[0]} sampler for starting_inputs and {ending_inputs.shape[0]} "
+            f"{ops.shape(starting_inputs)[0]} sampler for starting_inputs and {ops.shape(ending_inputs)[0]} "
             "for endinging_inputs."
         )
 
+        #TODO: convert to Keras
         starting_z = self(DatasetOutput(data=starting_inputs)).z
         ending_z = self(DatasetOutput(data=ending_inputs)).z
-        t = torch.linspace(0, 1, granularity).to(starting_inputs.device)
+        t = ops.linspace(0, 1, granularity)
         intep_line = (
             torch.kron(
                 starting_z.reshape(starting_z.shape[0], -1), (1 - t).unsqueeze(-1)
@@ -187,12 +195,9 @@ class BaseAE(keras.Model):
             + torch.kron(ending_z.reshape(ending_z.shape[0], -1), t.unsqueeze(-1))
         ).reshape((starting_z.shape[0] * t.shape[0],) + (starting_z.shape[1:]))
 
-        decoded_line = self.decoder(intep_line).reconstruction.reshape(
-            (
-                starting_inputs.shape[0],
-                t.shape[0],
-            )
-            + (starting_inputs.shape[1:])
+        decoded_line = ops.reshape(
+            self.decoder(intep_line).reconstruction,
+            (starting_inputs.shape[0], t.shape[0],) + (starting_inputs.shape[1:])
         )
 
         return decoded_line
@@ -216,11 +221,6 @@ class BaseAE(keras.Model):
                 path does not exist a folder will be created at the provided location.
         """
 
-        env_spec = EnvironmentConfig(
-            python_version=f"{sys.version_info[0]}.{sys.version_info[1]}"
-        )
-        model_dict = {"model_state_dict": deepcopy(self.state_dict())}
-
         if not os.path.exists(dir_path):
             try:
                 os.makedirs(dir_path)
@@ -228,21 +228,17 @@ class BaseAE(keras.Model):
             except FileNotFoundError as e:
                 raise e
 
-        env_spec.save_json(dir_path, "environment")
         self.model_config.save_json(dir_path, "model_config")
 
         # only save .pkl if custom architecture provided
         if not self.model_config.uses_default_encoder:
-            with open(os.path.join(dir_path, "encoder.pkl"), "wb") as fp:
-                cloudpickle.register_pickle_by_value(inspect.getmodule(self.encoder))
-                cloudpickle.dump(self.encoder, fp)
+            #TODO: move from os.path to pathlib
+            self.encoder.save(os.path.join(dir_path, "encoder.keras"))
 
         if not self.model_config.uses_default_decoder:
-            with open(os.path.join(dir_path, "decoder.pkl"), "wb") as fp:
-                cloudpickle.register_pickle_by_value(inspect.getmodule(self.decoder))
-                cloudpickle.dump(self.decoder, fp)
+            self.decoder.save(os.path.join(dir_path, "decoder.keras"))
 
-        torch.save(model_dict, os.path.join(dir_path, "model.pt"))
+        keras.models.save_model(self, os.path.join(dir_path, "model.keras"))
 
     def push_to_hf_hub(self, hf_hub_path: str):  # pragma: no cover
         """Method allowing to save your model directly on the Hugging Face hub.
@@ -350,65 +346,55 @@ class BaseAE(keras.Model):
     def _load_model_weights_from_folder(cls, dir_path):
         file_list = os.listdir(dir_path)
 
-        if "model.pt" not in file_list:
+        if "model.keras" not in file_list:
             raise FileNotFoundError(
-                f"Missing model weights file ('model.pt') file in"
+                f"Missing model weights file ('model.keras') file in"
                 f"{dir_path}... Cannot perform model building."
             )
 
-        path_to_model_weights = os.path.join(dir_path, "model.pt")
+        path_to_model = os.path.join(dir_path, "model.keras")
 
         try:
-            model_weights = torch.load(path_to_model_weights, map_location="cpu")
+            model = keras.models.load_model(path_to_model)
 
         except RuntimeError:
             RuntimeError(
-                "Enable to load model weights. Ensure they are saves in a '.pt' format."
+                "Enable to load model weights. Ensure they are saves in a '.keras' format."
             )
 
-        if "model_state_dict" not in model_weights.keys():
-            raise KeyError(
-                "Model state dict is not available in 'model.pt' file. Got keys:"
-                f"{model_weights.keys()}"
-            )
-
-        model_weights = model_weights["model_state_dict"]
+        model_weights = model.get_weights()
 
         return model_weights
 
     @classmethod
     def _load_custom_encoder_from_folder(cls, dir_path):
         file_list = os.listdir(dir_path)
-        cls._check_python_version_from_folder(dir_path=dir_path)
 
-        if "encoder.pkl" not in file_list:
+        if "encoder.keras" not in file_list:
             raise FileNotFoundError(
-                f"Missing encoder pkl file ('encoder.pkl') in"
+                f"Missing encoder keras file ('encoder.keras') in"
                 f"{dir_path}... This file is needed to rebuild custom encoders."
                 " Cannot perform model building."
             )
 
         else:
-            with open(os.path.join(dir_path, "encoder.pkl"), "rb") as fp:
-                encoder = CPU_Unpickler(fp).load()
+            encoder = keras.models.load_model(os.path.join(dir_path, "encoder.keras"))
 
         return encoder
 
     @classmethod
     def _load_custom_decoder_from_folder(cls, dir_path):
         file_list = os.listdir(dir_path)
-        cls._check_python_version_from_folder(dir_path=dir_path)
 
-        if "decoder.pkl" not in file_list:
+        if "decoder.keras" not in file_list:
             raise FileNotFoundError(
-                f"Missing decoder pkl file ('decoder.pkl') in"
+                f"Missing decoder keras file ('decoder.keras') in"
                 f"{dir_path}... This file is needed to rebuild custom decoders."
                 " Cannot perform model building."
             )
 
         else:
-            with open(os.path.join(dir_path, "decoder.pkl"), "rb") as fp:
-                decoder = CPU_Unpickler(fp).load()
+            decoder = keras.models.load_model(os.path.join(dir_path, "decoder.keras"))
 
         return decoder
 
@@ -422,12 +408,12 @@ class BaseAE(keras.Model):
         .. note::
             This function requires the folder to contain:
 
-            - | a ``model_config.json`` and a ``model.pt`` if no custom architectures were provided
+            - | a ``model_config.json`` and a ``model.keras`` if no custom architectures were provided
 
             **or**
 
-            - | a ``model_config.json``, a ``model.pt`` and a ``encoder.pkl`` (resp.
-                ``decoder.pkl``) if a custom encoder (resp. decoder) was provided
+            - | a ``model_config.json``, a ``model.keras`` and a ``encoder.keras`` (resp.
+                ``decoder.keras``) if a custom encoder (resp. decoder) was provided
         """
 
         model_config = cls._load_model_config_from_folder(dir_path)
@@ -446,7 +432,7 @@ class BaseAE(keras.Model):
             decoder = None
 
         model = cls(model_config, encoder=encoder, decoder=decoder)
-        model.load_state_dict(model_weights)
+        model.set_weights(model_weights)
 
         return model
 
@@ -461,12 +447,12 @@ class BaseAE(keras.Model):
         .. note::
             This function requires the folder to contain:
 
-            - | a ``model_config.json`` and a ``model.pt`` if no custom architectures were provided
+            - | a ``model_config.json`` and a ``model.keras`` if no custom architectures were provided
 
             **or**
 
-            - | a ``model_config.json``, a ``model.pt`` and a ``encoder.pkl`` (resp.
-                ``decoder.pkl``) if a custom encoder (resp. decoder) was provided
+            - | a ``model_config.json``, a ``model.keras`` and a ``encoder.keras`` (resp.
+                ``decoder.keras``) if a custom encoder (resp. decoder) was provided
         """
 
         if not hf_hub_is_available():
@@ -481,11 +467,10 @@ class BaseAE(keras.Model):
 
         logger.info(f"Downloading {cls.__name__} files for rebuilding...")
 
-        _ = hf_hub_download(repo_id=hf_hub_path, filename="environment.json")
         config_path = hf_hub_download(repo_id=hf_hub_path, filename="model_config.json")
         dir_path = os.path.dirname(config_path)
 
-        _ = hf_hub_download(repo_id=hf_hub_path, filename="model.pt")
+        _ = hf_hub_download(repo_id=hf_hub_path, filename="model.keras")
 
         model_config = cls._load_model_config_from_folder(dir_path)
 
@@ -513,14 +498,14 @@ class BaseAE(keras.Model):
 
         else:
             if not model_config.uses_default_encoder:
-                _ = hf_hub_download(repo_id=hf_hub_path, filename="encoder.pkl")
+                _ = hf_hub_download(repo_id=hf_hub_path, filename="encoder.keras")
                 encoder = cls._load_custom_encoder_from_folder(dir_path)
 
             else:
                 encoder = None
 
             if not model_config.uses_default_decoder:
-                _ = hf_hub_download(repo_id=hf_hub_path, filename="decoder.pkl")
+                _ = hf_hub_download(repo_id=hf_hub_path, filename="decoder.keras")
                 decoder = cls._load_custom_decoder_from_folder(dir_path)
 
             else:
@@ -529,7 +514,7 @@ class BaseAE(keras.Model):
             logger.info(f"Successfully downloaded {cls.__name__} model!")
 
             model = cls(model_config, encoder=encoder, decoder=decoder)
-            model.load_state_dict(model_weights)
+            model.set_weights(model_weights)
 
             return model
 
@@ -544,37 +529,17 @@ class BaseAE(keras.Model):
             )
         self.encoder = encoder
 
-    def set_decoder(self, decoder: BaseDecoder_PT) -> None:
+    def set_decoder(self, decoder: BaseDecoder) -> None:
         """Set the decoder of the model"""
-        if not issubclass(type(decoder), BaseDecoder_PT):
+        if not issubclass(type(decoder), BaseDecoder):
             raise BadInheritanceError(
                 (
-                    "Decoder must inherit from BaseDecoder_PT class from "
-                    "pythae.models.base_architectures.BaseDecoder_PT. Refer to documentation."
+                    "Decoder must inherit from BaseDecoder class from "
+                    "pythae.models.base_architectures.BaseDecoder. Refer to documentation."
                 )
             )
         self.decoder = decoder
 
-    @classmethod
-    def _check_python_version_from_folder(cls, dir_path: str):
-        if "environment.json" in os.listdir(dir_path):
-            env_spec = EnvironmentConfig.from_json_file(
-                os.path.join(dir_path, "environment.json")
-            )
-            python_version = env_spec.python_version
-            python_version_minor = python_version.split(".")[1]
-
-            if python_version_minor == "7" and sys.version_info[1] > 7:
-                raise LoadError(
-                    "Trying to reload a model saved with python3.7 with python3.8+. "
-                    "Please create a virtual env with python 3.7 to reload this model."
-                )
-
-            elif int(python_version_minor) >= 8 and sys.version_info[1] == 7:
-                raise LoadError(
-                    "Trying to reload a model saved with python3.8+ with python3.7. "
-                    "Please create a virtual env with python 3.8+ to reload this model."
-                )
 
 class BaseAE_PT(nn.Module):
     """Base class for Autoencoder based models.
