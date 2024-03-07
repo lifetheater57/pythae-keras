@@ -19,7 +19,7 @@ from pythae.samplers import (
 )
 from pythae.trainers import BaseTrainer, BaseTrainerConfig
 from tests.data.custom_architectures import (
-    Decoder_AE_Conv,
+    Decoder_AE_Conv_PT,
     Encoder_SVAE_Conv,
     Encoder_VAE_Conv,
     NetBadInheritance,
@@ -75,7 +75,7 @@ def custom_encoder(model_configs):
 
 @pytest.fixture
 def custom_decoder(model_configs):
-    return Decoder_AE_Conv(model_configs)
+    return Decoder_AE_Conv_PT(model_configs)
 
 
 class Test_Model_Building:

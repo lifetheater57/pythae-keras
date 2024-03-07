@@ -13,7 +13,7 @@ from pythae.pipelines import GenerationPipeline, TrainingPipeline
 from pythae.samplers import PixelCNNSamplerConfig
 from pythae.trainers import BaseTrainer, BaseTrainerConfig
 from tests.data.custom_architectures import (
-    Decoder_AE_Conv,
+    Decoder_AE_Conv_PT,
     Encoder_AE_Conv,
     NetBadInheritance,
 )
@@ -52,7 +52,7 @@ def custom_encoder(model_configs):
 
 @pytest.fixture
 def custom_decoder(model_configs):
-    return Decoder_AE_Conv(model_configs)
+    return Decoder_AE_Conv_PT(model_configs)
 
 
 class Test_Model_Building:

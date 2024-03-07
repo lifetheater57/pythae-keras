@@ -22,7 +22,7 @@ from pythae.trainers import (
     BaseTrainerConfig,
 )
 from tests.data.custom_architectures import (
-    Decoder_AE_Conv,
+    Decoder_AE_Conv_PT,
     Discriminator_MLP_Custom,
     Encoder_VAE_Conv,
     NetBadInheritance,
@@ -57,7 +57,7 @@ def custom_encoder(model_configs):
 
 @pytest.fixture
 def custom_decoder(model_configs):
-    return Decoder_AE_Conv(model_configs)
+    return Decoder_AE_Conv_PT(model_configs)
 
 
 @pytest.fixture

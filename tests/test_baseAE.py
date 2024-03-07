@@ -7,7 +7,7 @@ import torch
 from pythae.customexception import BadInheritanceError
 from pythae.models import BaseAE_PT, BaseAEConfig
 from tests.data.custom_architectures import (
-    Decoder_AE_Conv,
+    Decoder_AE_Conv_PT,
     Encoder_AE_Conv,
     NetBadInheritance,
 )
@@ -33,7 +33,7 @@ def model_config_with_input_dim(request):
 
 @pytest.fixture
 def custom_decoder(model_config_with_input_dim):
-    return Decoder_AE_Conv(model_config_with_input_dim)
+    return Decoder_AE_Conv_PT(model_config_with_input_dim)
 
 
 class Test_Model_Building:
