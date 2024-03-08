@@ -7,7 +7,7 @@ import logging
 import numpy as np
 from tqdm.auto import tqdm
 
-from ..models import BaseAEConfig
+from ..models import BaseAE_PTConfig
 from .base_trainer.base_training_config import BaseTrainerConfig
 
 logger = logging.getLogger(__name__)
@@ -324,7 +324,7 @@ class WandbCallback(TrainingCallback):  # pragma: no cover
     def setup(
         self,
         training_config: BaseTrainerConfig,
-        model_config: BaseAEConfig = None,
+        model_config: BaseAE_PTConfig = None,
         project_name: str = "pythae_experiment",
         entity_name: str = None,
         **kwargs,
@@ -456,7 +456,7 @@ class MLFlowCallback(TrainingCallback):  # pragma: no cover
     def setup(
         self,
         training_config: BaseTrainerConfig,
-        model_config: BaseAEConfig = None,
+        model_config: BaseAE_PTConfig = None,
         run_name: str = None,
         **kwargs,
     ):

@@ -5,7 +5,7 @@ from typing import List
 import torch
 import torch.nn as nn
 
-from ....base import BaseAEConfig
+from ....base import BaseAE_PTConfig
 from ....base.base_utils import ModelOutput
 from ....nn import BaseDecoder_PT, BaseEncoder_PT
 from ..utils import ResBlock
@@ -81,7 +81,7 @@ class Encoder_ResNet_AE_MNIST(BaseEncoder_PT):
 
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseEncoder_PT.__init__(self)
 
         self.input_dim = (1, 28, 28)
@@ -222,7 +222,7 @@ class Encoder_ResNet_VAE_MNIST(BaseEncoder_PT):
 
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseEncoder_PT.__init__(self)
 
         self.input_dim = (1, 28, 28)
@@ -364,7 +364,7 @@ class Encoder_ResNet_SVAE_MNIST(BaseEncoder_PT):
 
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseEncoder_PT.__init__(self)
 
         self.input_dim = (1, 28, 28)
@@ -507,7 +507,7 @@ class Encoder_ResNet_VQVAE_MNIST(BaseEncoder_PT):
 
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseEncoder_PT.__init__(self)
 
         self.input_dim = (1, 28, 28)
@@ -646,7 +646,7 @@ class Decoder_ResNet_AE_MNIST(BaseDecoder_PT):
             ... torch.Size([2, 1, 28, 28])
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseDecoder_PT.__init__(self)
 
         self.input_dim = (1, 28, 28)
@@ -800,7 +800,7 @@ class Decoder_ResNet_VQVAE_MNIST(BaseDecoder_PT):
             ... torch.Size([2, 1, 28, 28])
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseDecoder_PT.__init__(self)
 
         self.input_dim = (1, 28, 28)

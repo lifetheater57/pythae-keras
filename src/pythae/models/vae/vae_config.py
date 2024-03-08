@@ -1,7 +1,7 @@
 from pydantic.dataclasses import dataclass
 from typing_extensions import Literal
 
-from ..base.base_config import BaseAEConfig
+from ..base.base_config import BaseAEConfig, BaseAE_PTConfig
 
 
 @dataclass
@@ -18,7 +18,7 @@ class VAEConfig(BaseAEConfig):
 
 
 @dataclass
-class VAE_PTConfig(BaseAEConfig):
+class VAE_PTConfig(BaseAE_PTConfig):
     """VAE config class.
 
     Parameters:

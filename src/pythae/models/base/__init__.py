@@ -14,7 +14,7 @@ It contains:
    model outputs of the :class:`forward` method).
 """
 
-from .base_config import BaseAEConfig
+from .base_config import BaseAEConfig, BaseAE_PTConfig
 from .base_model import BaseAE, BaseAE_PT
 
-__all__ = ["BaseAE", "BaseAEConfig", "BaseAE_PT"]
+__all__ = ["BaseAE", "BaseAEConfig", "BaseAE_PT", "BaseAE_PTConfig"]

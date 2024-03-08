@@ -5,13 +5,13 @@ import pytest
 from pydantic import ValidationError
 
 from pythae.config import BaseConfig
-from pythae.models import AEConfig, BaseAEConfig
+from pythae.models import AEConfig, BaseAE_PTConfig
 from pythae.samplers import BaseSamplerConfig, NormalSamplerConfig
 from pythae.trainers import AdversarialTrainerConfig, BaseTrainerConfig
 
 PATH = os.path.dirname(os.path.abspath(__file__))
 
-
+#TODO: check if need to translate config tests
 class Test_Load_Config_from_JSON:
     @pytest.fixture(
         params=[
@@ -31,7 +31,7 @@ class Test_Load_Config_from_JSON:
         params=[
             [
                 os.path.join(PATH, "data/baseAE/configs/model_config00.json"),
-                BaseAEConfig(latent_dim=11),
+                BaseAE_PTConfig(latent_dim=11),
             ],
             [
                 os.path.join(PATH, "data/baseAE/configs/training_config00.json"),
@@ -61,7 +61,7 @@ class Test_Load_Config_from_JSON:
         true_config = custom_config_path_with_true_config[1]
 
         if config_path == os.path.join(PATH, "data/baseAE/configs/model_config00.json"):
-            parsed_config = BaseAEConfig.from_json_file(config_path)
+            parsed_config = BaseAE_PTConfig.from_json_file(config_path)
 
         elif config_path == os.path.join(
             PATH, "data/baseAE/configs/training_config00.json"
@@ -104,7 +104,7 @@ class Test_Load_Config_from_JSON:
 
 class Test_Save_Model_JSON_from_Config:
     @pytest.fixture(
-        params=[BaseAEConfig(), BaseAEConfig(input_dim=(2, 3, 100), latent_dim=5)]
+        params=[BaseAE_PTConfig(), BaseAE_PTConfig(input_dim=(2, 3, 100), latent_dim=5)]
     )
     def model_configs(self, request):
         return request.param
@@ -117,7 +117,7 @@ class Test_Save_Model_JSON_from_Config:
 
         assert "dummy_json.json" in os.listdir(dir_path)
 
-        rec_model_config = BaseAEConfig.from_json_file(
+        rec_model_config = BaseAE_PTConfig.from_json_file(
             os.path.join(dir_path, "dummy_json.json")
         )
 

@@ -5,7 +5,7 @@ from typing import List
 import torch
 import torch.nn as nn
 
-from ....base import BaseAEConfig
+from ....base import BaseAE_PTConfig
 from ....base.base_utils import ModelOutput
 from ....nn import BaseDecoder_PT, BaseDiscriminator, BaseEncoder_PT
 
@@ -71,7 +71,7 @@ class Encoder_Conv_AE_CIFAR(BaseEncoder_PT):
             ... torch.Size([2, 16])
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseEncoder_PT.__init__(self)
 
         self.input_dim = (3, 32, 32)
@@ -223,7 +223,7 @@ class Encoder_Conv_VAE_CIFAR(BaseEncoder_PT):
 
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseEncoder_PT.__init__(self)
 
         self.input_dim = (3, 32, 32)
@@ -381,7 +381,7 @@ class Encoder_Conv_SVAE_CIFAR(BaseEncoder_PT):
 
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseEncoder_PT.__init__(self)
 
         self.input_dim = (3, 32, 32)

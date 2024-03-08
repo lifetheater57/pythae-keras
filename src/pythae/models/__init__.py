@@ -17,7 +17,7 @@ and named likewise the model. The following modules can be found in this folder:
 from .adversarial_ae import Adversarial_AE, Adversarial_AE_Config
 from .ae import AE, AEConfig
 from .auto_model import AutoModel
-from .base import BaseAE, BaseAEConfig, BaseAE_PT
+from .base import BaseAE, BaseAEConfig, BaseAE_PT, BaseAE_PTConfig
 from .beta_tc_vae import BetaTCVAE, BetaTCVAEConfig
 from .beta_vae import BetaVAE, BetaVAEConfig
 from .ciwae import CIWAE, CIWAEConfig
@@ -47,6 +47,7 @@ __all__ = [
     "BaseAE",
     "BaseAEConfig",
     "BaseAE_PT",
+    "BaseAE_PTConfig",
     "AE",
     "AEConfig",
     "WAE_MMD",

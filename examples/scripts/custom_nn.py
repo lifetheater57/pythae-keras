@@ -4,7 +4,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from pythae.models import BaseAEConfig
+from pythae.models import BaseAE_PTConfig
 from pythae.models.base.base_utils import ModelOutput
 from pythae.models.nn import BaseDecoder_PT, BaseDiscriminator, BaseEncoder_PT
 
@@ -14,7 +14,7 @@ class Fully_Conv_Encoder_Conv_AE_MNIST(BaseEncoder_PT):
     A proposed fully Convolutional encoder used for VQVAE.
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseEncoder_PT.__init__(self)
 
         self.input_dim = (1, 28, 28)

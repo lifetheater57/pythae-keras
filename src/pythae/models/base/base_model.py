@@ -21,7 +21,7 @@ from ...data.datasets import BaseDataset, DatasetOutput
 from ..auto_model import AutoConfig
 from ..nn import BaseDecoder, BaseEncoder, BaseDecoder_PT, BaseEncoder_PT
 from ..nn.default_architectures import Decoder_AE_MLP, Decoder_AE_MLP_PT
-from .base_config import BaseAEConfig, EnvironmentConfig
+from .base_config import BaseAEConfig, EnvironmentConfig, BaseAE_PTConfig
 from .base_utils import (
     CPU_Unpickler,
     ModelOutput,
@@ -565,7 +565,7 @@ class BaseAE_PT(nn.Module):
 
     def __init__(
         self,
-        model_config: BaseAEConfig,
+        model_config: BaseAE_PTConfig,
         encoder: Optional[BaseEncoder_PT] = None,
         decoder: Optional[BaseDecoder_PT] = None,
     ):

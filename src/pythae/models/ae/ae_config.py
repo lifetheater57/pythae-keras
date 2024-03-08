@@ -1,10 +1,10 @@
 from pydantic.dataclasses import dataclass
 
-from ..base.base_config import BaseAEConfig
+from ..base.base_config import BaseAE_PTConfig
 
 
 @dataclass
-class AEConfig(BaseAEConfig):
+class AEConfig(BaseAE_PTConfig):
     """This is the autoencoder model configuration instance deriving from
     :class:`~BaseAEConfig`.
 

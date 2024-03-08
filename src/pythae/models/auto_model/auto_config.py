@@ -25,6 +25,11 @@ class AutoConfig(BaseConfig):
 
             model_config = BaseAEConfig.from_json_file(json_path)
 
+        elif config_name == "BaseAE_PTConfig":
+            from ..base import BaseAE_PTConfig
+
+            model_config = BaseAE_PTConfig.from_json_file(json_path)
+
         elif config_name == "Adversarial_AE_Config":
             from ..adversarial_ae import Adversarial_AE_Config
 

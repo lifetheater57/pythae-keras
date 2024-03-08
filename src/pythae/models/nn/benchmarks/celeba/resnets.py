@@ -5,7 +5,7 @@ from typing import List
 import torch
 import torch.nn as nn
 
-from ....base import BaseAEConfig
+from ....base import BaseAE_PTConfig
 from ....base.base_utils import ModelOutput
 from ....nn import BaseDecoder_PT, BaseEncoder_PT
 from ..utils import ResBlock
@@ -84,7 +84,7 @@ class Encoder_ResNet_AE_CELEBA(BaseEncoder_PT):
 
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseEncoder_PT.__init__(self)
 
         self.input_dim = (3, 64, 64)
@@ -228,7 +228,7 @@ class Encoder_ResNet_VAE_CELEBA(BaseEncoder_PT):
             ... torch.Size([2, 16])
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseEncoder_PT.__init__(self)
 
         self.input_dim = (3, 64, 64)
@@ -376,7 +376,7 @@ class Encoder_ResNet_SVAE_CELEBA(BaseEncoder_PT):
 
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseEncoder_PT.__init__(self)
 
         self.input_dim = (3, 64, 64)
@@ -540,7 +540,7 @@ class Encoder_ResNet_VQVAE_CELEBA(BaseEncoder_PT):
 
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseEncoder_PT.__init__(self)
 
         self.input_dim = (3, 64, 64)
@@ -682,7 +682,7 @@ class Decoder_ResNet_AE_CELEBA(BaseDecoder_PT):
             ... torch.Size([2, 3, 64, 64])
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseDecoder_PT.__init__(self)
 
         self.input_dim = (3, 64, 64)
@@ -853,7 +853,7 @@ class Decoder_ResNet_VQVAE_CELEBA(BaseDecoder_PT):
             ... torch.Size([2, 3, 64, 64])
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseDecoder_PT.__init__(self)
 
         self.input_dim = (3, 64, 64)

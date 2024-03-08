@@ -5,7 +5,7 @@ from typing import List
 import torch
 import torch.nn as nn
 
-from ....base import BaseAEConfig
+from ....base import BaseAE_PTConfig
 from ....base.base_utils import ModelOutput
 from ....nn import BaseDecoder_PT, BaseEncoder_PT
 from ..utils import ResBlock
@@ -80,7 +80,7 @@ class Encoder_ResNet_AE_CIFAR(BaseEncoder_PT):
 
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseEncoder_PT.__init__(self)
 
         self.input_dim = (3, 32, 32)
@@ -221,7 +221,7 @@ class Encoder_ResNet_VAE_CIFAR(BaseEncoder_PT):
             ... torch.Size([2, 16])
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseEncoder_PT.__init__(self)
 
         self.input_dim = (3, 32, 32)
@@ -364,7 +364,7 @@ class Encoder_ResNet_SVAE_CIFAR(BaseEncoder_PT):
 
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseEncoder_PT.__init__(self)
 
         self.input_dim = (3, 32, 32)
@@ -508,7 +508,7 @@ class Encoder_ResNet_VQVAE_CIFAR(BaseEncoder_PT):
 
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseEncoder_PT.__init__(self)
 
         self.input_dim = (3, 32, 32)
@@ -644,7 +644,7 @@ class Decoder_ResNet_AE_CIFAR(BaseDecoder_PT):
             ... torch.Size([2, 3, 32, 32])
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseDecoder_PT.__init__(self)
 
         self.input_dim = (3, 32, 32)
@@ -784,7 +784,7 @@ class Decoder_ResNet_VQVAE_CIFAR(BaseDecoder_PT):
             ... torch.Size([2, 3, 32, 32])
     """
 
-    def __init__(self, args: BaseAEConfig):
+    def __init__(self, args: BaseAE_PTConfig):
         BaseDecoder_PT.__init__(self)
 
         self.input_dim = (3, 32, 32)
