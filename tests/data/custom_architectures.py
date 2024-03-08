@@ -247,68 +247,68 @@ class Encoder_SVAE_Conv(BaseEncoder_PT):
         return output
 
 
-class Decoder_AE_Conv(BaseDecoder_PT):
+class Decoder_AE_Conv(BaseDecoder):
     def __init__(self, args):
-        BaseDecoder_PT.__init__(self)
+        super().__init__()
+        
         self.input_dim = args.input_dim
         self.latent_dim = args.latent_dim
         self.n_channels = 1
 
-        layers = nn.ModuleList()
+        model = keras.Sequential([keras.Input(shape=self.latent_dim)])
 
-        layers.append(
-            nn.Sequential(
-                nn.Linear(self.latent_dim, 256),
-                nn.ReLU(),
-                nn.Linear(256, 512),
-                nn.ReLU(),
-            )
+        model.add(
+            keras.Sequential([
+                layers.Dense(256, activation="relu"),
+                layers.Dense(512, activation="relu"),
+            ])
         )
 
-        layers.append(
-            nn.Sequential(
-                nn.ConvTranspose2d(
-                    32, out_channels=32, kernel_size=3, stride=2, padding=1
+        #TODO: check if "same" padding is equivalent to 1
+        #TODO: create an issue on the need to reshape here
+        #TODO: set proper shapes here
+        model.add(
+            keras.Sequential([
+                layers.Reshape((1, 32, 16)),
+                layers.Conv2DTranspose(
+                    filters=32, kernel_size=3, strides=2, padding="same", activation="relu"
                 ),
-                nn.BatchNorm2d(32),
-                nn.ReLU(),
-            )
+                layers.BatchNormalization(axis=1),
+            ])
         )
 
-        layers.append(
-            nn.Sequential(
-                nn.ConvTranspose2d(
-                    32,
-                    out_channels=32,
+        #NOTE: no more output_padding
+        model.add(
+            keras.Sequential([
+                layers.Conv2DTranspose(
+                    filters=32,
                     kernel_size=3,
-                    stride=2,
-                    padding=1,
-                    output_padding=1,
+                    strides=2,
+                    padding="same",
+                    #output_padding=1,
+                    activation="relu",
                 ),
-                nn.BatchNorm2d(32),
-                nn.ReLU(),
+                layers.BatchNormalization(axis=1),
+            ])
+        )
+
+        #TODO: check impact of removing batch normalization after last layer
+        model.add(
+            layers.Conv2DTranspose(
+                filters=self.n_channels,
+                kernel_size=3,
+                strides=2,
+                padding="same",
+                #output_padding=1,
+                activation="sigmoid",
             )
         )
 
-        layers.append(
-            nn.Sequential(
-                nn.ConvTranspose2d(
-                    32,
-                    out_channels=self.n_channels,
-                    kernel_size=3,
-                    stride=2,
-                    padding=1,
-                    output_padding=1,
-                ),
-                nn.BatchNorm2d(self.n_channels),
-                nn.Sigmoid(),
-            )
-        )
+        self.layers = model
+        self.depth = len(model.layers)
 
-        self.layers = layers
-        self.depth = len(layers)
-
-    def forward(self, z: torch.Tensor, output_layer_levels: List[int] = None):
+    #TODO: add back type hinting
+    def forward(self, z, output_layer_levels: List[int] = None):
         output = ModelOutput()
 
         max_depth = self.depth
@@ -338,7 +338,7 @@ class Decoder_AE_Conv(BaseDecoder_PT):
                     output[f"reconstruction_layer_{i+1}"] = out
 
             if i == 0:
-                out = out.reshape(z.shape[0], 32, 4, 4)
+                out = ops.reshape(out, (z.shape[0], 32, 4, 4))
 
             if i + 1 == self.depth:
                 output["reconstruction"] = out
