@@ -4,6 +4,8 @@ from typing import List
 import numpy as np
 import torch
 import torch.nn as nn
+import keras
+from keras import layers, ops
 
 from pythae.models.base.base_utils import ModelOutput
 from pythae.models.nn import *

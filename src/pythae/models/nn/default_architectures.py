@@ -212,8 +212,7 @@ class Encoder_SVAE_MLP(BaseEncoder_PT):
 
 class Decoder_AE_MLP(BaseDecoder):
     def __init__(self, args: dict):
-        super.__init__(self)
-
+        super().__init__()
         self.input_dim = args.input_dim
 
         model = keras.Sequential([keras.Input(shape=args.latent_dim)])
@@ -223,7 +222,7 @@ class Decoder_AE_MLP(BaseDecoder):
         model.add(layers.Dense(int(ops.prod(args.input_dim)), activation="sigmoid"))
 
         self.layers = model
-        self.depth = len(model)
+        self.depth = len(model.layers)
 
     #TODO: add back type hinting
     def forward(self, z, output_layer_levels: List[int] = None):
