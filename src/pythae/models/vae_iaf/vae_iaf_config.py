@@ -1,10 +1,10 @@
 from pydantic.dataclasses import dataclass
 
-from ..vae import VAEConfig
+from ..vae import VAE_PTConfig
 
 
 @dataclass
-class VAE_IAF_Config(VAEConfig):
+class VAE_IAF_Config(VAE_PTConfig):
     """VAE with Inverse Autoregressive Normalizing Flow config class.
 
     Parameters:

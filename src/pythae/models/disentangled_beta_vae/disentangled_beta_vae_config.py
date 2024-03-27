@@ -1,10 +1,10 @@
 from pydantic.dataclasses import dataclass
 
-from ..vae import VAEConfig
+from ..vae import VAE_PTConfig
 
 
 @dataclass
-class DisentangledBetaVAEConfig(VAEConfig):
+class DisentangledBetaVAEConfig(VAE_PTConfig):
     r"""
     Disentangled :math:`\beta`-VAE model config config class
 

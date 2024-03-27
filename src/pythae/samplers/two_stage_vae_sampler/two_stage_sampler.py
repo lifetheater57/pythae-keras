@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader, Dataset
 
 from ...data.datasets import collate_dataset_output
 from ...data.preprocessors import DataProcessor
-from ...models import VAE_PT, VAEConfig
+from ...models import VAE_PT, VAE_PTConfig
 from ...models.base.base_utils import ModelOutput
 from ...models.nn import BaseDecoder_PT, BaseEncoder_PT
 from ...trainers import BaseTrainer, BaseTrainerConfig
@@ -120,7 +120,7 @@ class TwoStageVAESampler(BaseSampler):
 
         BaseSampler.__init__(self, model=model, sampler_config=sampler_config)
 
-        second_vae_config = VAEConfig(
+        second_vae_config = VAE_PTConfig(
             latent_dim=model.model_config.latent_dim,
             reconstruction_loss=sampler_config.reconstruction_loss,
         )

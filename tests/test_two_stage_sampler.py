@@ -5,7 +5,7 @@ import numpy as np
 import pytest
 import torch
 
-from pythae.models import AE, VAE_PT, VAMP, AEConfig, VAEConfig, VAMPConfig
+from pythae.models import AE, VAE_PT, VAMP, AEConfig, VAE_PTConfig, VAMPConfig
 from pythae.pipelines import GenerationPipeline
 from pythae.samplers import (
     NormalSampler,
@@ -31,7 +31,7 @@ def dummy_data(request):
 @pytest.fixture(
     params=[
         VAMP(VAMPConfig(input_dim=(1, 28, 28), latent_dim=2)),
-        VAE_PT(VAEConfig(input_dim=(1, 28, 28), latent_dim=4)),
+        VAE_PT(VAE_PTConfig(input_dim=(1, 28, 28), latent_dim=4)),
     ]
 )
 def model(request):

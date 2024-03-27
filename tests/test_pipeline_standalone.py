@@ -6,7 +6,7 @@ from torch.utils.data import Dataset, DataLoader
 
 from pythae.customexception import DatasetError
 from pythae.data.datasets import DatasetOutput
-from pythae.models import VAE_PT, VAEConfig, Adversarial_AE, Adversarial_AE_Config, RAE_L2, RAE_L2_Config, VAEGAN, VAEGANConfig
+from pythae.models import VAE_PT, VAE_PTConfig, Adversarial_AE, Adversarial_AE_Config, RAE_L2, RAE_L2_Config, VAEGAN, VAEGANConfig
 from pythae.pipelines import *
 from pythae.samplers import NormalSampler, NormalSamplerConfig
 from pythae.trainers import BaseTrainerConfig
@@ -72,7 +72,7 @@ class Test_Pipeline_Standalone:
     
     @pytest.fixture(
             params=[
-                (VAE_PT, VAEConfig),
+                (VAE_PT, VAE_PTConfig),
                 (Adversarial_AE, Adversarial_AE_Config),
                 (RAE_L2, RAE_L2_Config),
                 (VAEGAN, VAEGANConfig)
@@ -89,7 +89,7 @@ class Test_Pipeline_Standalone:
 
     @pytest.fixture
     def training_pipeline(self, model, train_dataset):
-        vae_config = VAEConfig(
+        vae_config = VAE_PTConfig(
             input_dim=tuple(train_dataset.data[0].shape), latent_dim=2
         )
         vae = VAE_PT(vae_config)
@@ -105,7 +105,7 @@ class Test_Pipeline_Standalone:
 
         with pytest.raises(AssertionError):
             pipeline = TrainingPipeline(
-                model=VAE_PT(VAEConfig(input_dim=(1, 2, 3))), training_config=Pipeline()
+                model=VAE_PT(VAE_PTConfig(input_dim=(1, 2, 3))), training_config=Pipeline()
             )
 
         tmpdir.mkdir("dummy_folder")
@@ -176,13 +176,13 @@ class Test_Pipeline_Standalone:
 
         with pytest.raises(NotImplementedError):
             pipe = GenerationPipeline(
-                model=VAE_PT(VAEConfig(input_dim=(1, 2, 3))),
+                model=VAE_PT(VAE_PTConfig(input_dim=(1, 2, 3))),
                 sampler_config=BaseTrainerConfig(),
             )
 
         tmpdir.mkdir("dummy_folder")
         dir_path = os.path.join(tmpdir, "dummy_folder")
-        pipe = GenerationPipeline(model=VAE_PT(VAEConfig(input_dim=(1, 2, 3))))
+        pipe = GenerationPipeline(model=VAE_PT(VAE_PTConfig(input_dim=(1, 2, 3))))
         assert isinstance(pipe.sampler, NormalSampler)
         assert pipe.sampler.sampler_config == NormalSamplerConfig()
 

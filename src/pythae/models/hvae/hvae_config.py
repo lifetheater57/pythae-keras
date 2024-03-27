@@ -1,10 +1,10 @@
 from pydantic.dataclasses import dataclass
 
-from ..vae import VAEConfig
+from ..vae import VAE_PTConfig
 
 
 @dataclass
-class HVAEConfig(VAEConfig):
+class HVAEConfig(VAE_PTConfig):
     r"""Hamiltonian Variational Autoencoder config class.
 
     Parameters:

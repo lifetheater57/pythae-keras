@@ -1,10 +1,10 @@
 from pydantic.dataclasses import dataclass
 
-from ..vae import VAEConfig
+from ..vae import VAE_PTConfig
 
 
 @dataclass
-class PIWAEConfig(VAEConfig):
+class PIWAEConfig(VAE_PTConfig):
     """Partially IWAE model config class.
 
     Parameters:

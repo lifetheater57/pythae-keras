@@ -1,11 +1,11 @@
 from pydantic.dataclasses import dataclass
 from typing_extensions import Literal
 
-from ..vae import VAEConfig
+from ..vae import VAE_PTConfig
 
 
 @dataclass
-class PoincareVAEConfig(VAEConfig):
+class PoincareVAEConfig(VAE_PTConfig):
     """Poincaré VAE config class.
 
     Parameters:

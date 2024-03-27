@@ -2,11 +2,11 @@ from typing import Tuple, Union
 
 from pydantic.dataclasses import dataclass
 
-from ..vae import VAEConfig
+from ..vae import VAE_PTConfig
 
 
 @dataclass
-class VAEGANConfig(VAEConfig):
+class VAEGANConfig(VAE_PTConfig):
     """Adversarial AE model config class.
 
     Parameters:

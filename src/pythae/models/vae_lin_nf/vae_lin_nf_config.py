@@ -3,11 +3,11 @@ from typing import List
 
 from pydantic.dataclasses import dataclass
 
-from ..vae import VAEConfig
+from ..vae import VAE_PTConfig
 
 
 @dataclass
-class VAE_LinNF_Config(VAEConfig):
+class VAE_LinNF_Config(VAE_PTConfig):
     """VAE with linear Normalizing Flow config class.
 
     Parameters:

@@ -166,8 +166,8 @@ class Encoder_ResNet_VAE_CELEBA(BaseEncoder_PT):
     .. code-block::
 
         >>> from pythae.models.nn.benchmarks.celeba import Encoder_ResNet_VAE_CELEBA
-        >>> from pythae.models import VAEConfig
-        >>> model_config = VAEConfig(input_dim=(3, 64, 64), latent_dim=16)
+        >>> from pythae.models import VAE_PTConfig
+        >>> model_config = VAE_PTConfig(input_dim=(3, 64, 64), latent_dim=16)
         >>> encoder = Encoder_ResNet_VAE_CELEBA(model_config)
         >>> encoder
         ... Encoder_ResNet_VAE_CELEBA(
@@ -621,8 +621,8 @@ class Decoder_ResNet_AE_CELEBA(BaseDecoder_PT):
     .. code-block::
 
         >>> from pythae.models.nn.benchmarks.celeba import Decoder_ResNet_AE_CELEBA
-        >>> from pythae.models import VAEConfig
-        >>> model_config = VAEConfig(input_dim=(3, 64, 64), latent_dim=16)
+        >>> from pythae.models import VAE_PTConfig
+        >>> model_config = VAE_PTConfig(input_dim=(3, 64, 64), latent_dim=16)
         >>> decoder = Decoder_ResNet_AE_CELEBA(model_config)
         >>> decoder
         ... Decoder_ResNet_AE_CELEBA(

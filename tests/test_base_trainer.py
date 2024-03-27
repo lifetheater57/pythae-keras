@@ -5,7 +5,7 @@ import pytest
 import torch
 
 from pythae.customexception import ModelError
-from pythae.models import AE, RHVAE, VAE_PT, AEConfig, RHVAEConfig, VAEConfig
+from pythae.models import AE, RHVAE, VAE_PT, AEConfig, RHVAEConfig, VAE_PTConfig
 from pythae.trainers import BaseTrainer, BaseTrainerConfig
 from tests.data.custom_architectures import *
 
@@ -508,7 +508,7 @@ class Test_Main_Training:
     @pytest.fixture(
         params=[
             AEConfig(input_dim=(1, 28, 28)),
-            VAEConfig(input_dim=(1, 28, 28), latent_dim=5),
+            VAE_PTConfig(input_dim=(1, 28, 28), latent_dim=5),
         ]
     )
     def ae_config(self, request):
@@ -516,7 +516,7 @@ class Test_Main_Training:
 
     @pytest.fixture
     def custom_encoder(self, ae_config):
-        if isinstance(ae_config, VAEConfig):
+        if isinstance(ae_config, VAE_PTConfig):
             return Encoder_VAE_MLP_Custom(ae_config)
         return Encoder_AE_MLP_Custom(ae_config)
 
@@ -539,25 +539,25 @@ class Test_Main_Training:
         alpha = request.param
 
         if alpha < 0.25:
-            if isinstance(ae_config, VAEConfig):
+            if isinstance(ae_config, VAE_PTConfig):
                 model = VAE_PT(ae_config)
             else:
                 model = AE(ae_config)
 
         elif 0.25 <= alpha < 0.5:
-            if isinstance(ae_config, VAEConfig):
+            if isinstance(ae_config, VAE_PTConfig):
                 model = VAE_PT(ae_config, encoder=custom_encoder)
             else:
                 model = AE(ae_config, encoder=custom_encoder)
 
         elif 0.5 <= alpha < 0.75:
-            if isinstance(ae_config, VAEConfig):
+            if isinstance(ae_config, VAE_PTConfig):
                 model = VAE_PT(ae_config, decoder=custom_decoder)
             else:
                 model = AE(ae_config, decoder=custom_decoder)
 
         else:
-            if isinstance(ae_config, VAEConfig):
+            if isinstance(ae_config, VAE_PTConfig):
                 model = VAE_PT(ae_config, encoder=custom_encoder, decoder=custom_decoder)
             else:
                 model = AE(ae_config, encoder=custom_encoder, decoder=custom_decoder)

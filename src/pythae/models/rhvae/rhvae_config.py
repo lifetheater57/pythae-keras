@@ -1,10 +1,10 @@
 from pydantic.dataclasses import dataclass
 
-from ..vae import VAEConfig
+from ..vae import VAE_PTConfig
 
 
 @dataclass
-class RHVAEConfig(VAEConfig):
+class RHVAEConfig(VAE_PTConfig):
     r"""RHVAE config class.
 
     Parameters:

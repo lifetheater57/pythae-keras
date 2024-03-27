@@ -1,10 +1,10 @@
 from pydantic.dataclasses import dataclass
 
-from ..vae import VAEConfig
+from ..vae import VAE_PTConfig
 
 
 @dataclass
-class MSSSIM_VAEConfig(VAEConfig):
+class MSSSIM_VAEConfig(VAE_PTConfig):
     r"""
     VAE using using perceptual similarity metrics (MS-SSIM) model config config class
 

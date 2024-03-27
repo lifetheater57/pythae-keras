@@ -167,8 +167,8 @@ class Encoder_Conv_VAE_CELEBA(BaseEncoder_PT):
     .. code-block::
 
             >>> from pythae.models.nn.benchmarks.celeba import Encoder_Conv_VAE_CELEBA
-            >>> from pythae.models import VAEConfig
-            >>> model_config = VAEConfig(input_dim=(3, 64, 64), latent_dim=64)
+            >>> from pythae.models import VAE_PTConfig
+            >>> model_config = VAE_PTConfig(input_dim=(3, 64, 64), latent_dim=64)
             >>> encoder = Encoder_Conv_VAE_CELEBA(model_config)
             >>> encoder
             ... Encoder_Conv_VAE_CELEBA(
@@ -485,8 +485,8 @@ class Decoder_Conv_AE_CELEBA(BaseDecoder_PT):
     .. code-block::
 
             >>> from pythae.models.nn.benchmarks.celeba import Decoder_Conv_AE_CELEBA
-            >>> from pythae.models import VAEConfig
-            >>> model_config = VAEConfig(input_dim=(3, 64, 64), latent_dim=64)
+            >>> from pythae.models import VAE_PTConfig
+            >>> model_config = VAE_PTConfig(input_dim=(3, 64, 64), latent_dim=64)
             >>> decoder = Decoder_Conv_AE_CELEBA(model_config)
             >>> decoder
             ... Decoder_Conv_AE_CELEBA(

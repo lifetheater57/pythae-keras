@@ -1,10 +1,10 @@
 from pydantic.dataclasses import dataclass
 
-from ..vae import VAEConfig
+from ..vae import VAE_PTConfig
 
 
 @dataclass
-class Adversarial_AE_Config(VAEConfig):
+class Adversarial_AE_Config(VAE_PTConfig):
     """Adversarial AE model config class.
 
     Parameters:

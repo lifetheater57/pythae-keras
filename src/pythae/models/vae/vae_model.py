@@ -10,13 +10,13 @@ from ..base import BaseAE, BaseAE_PT
 from ..base.base_utils import ModelOutput
 from ..nn import BaseDecoder, BaseEncoder, BaseDecoder_PT, BaseEncoder_PT
 from ..nn.default_architectures import Encoder_VAE_MLP, Encoder_VAE_MLP_PT
-from .vae_config import VAEConfig
+from .vae_config import VAEConfig, VAE_PTConfig
 
 class VAE(BaseAE_PT):
     """Vanilla Variational Autoencoder model.
 
     Args:
-        model_config (VAEConfig): The Variational Autoencoder configuration setting the main
+        model_config (VAE_PTConfig): The Variational Autoencoder configuration setting the main
         parameters of the model.
 
         encoder (BaseEncoder_PT): An instance of BaseEncoder_PT (inheriting from `torch.nn.Module` which
@@ -36,7 +36,7 @@ class VAE(BaseAE_PT):
 
     def __init__(
         self,
-        model_config: VAEConfig,
+        model_config: VAE_PTConfig,
         encoder: Optional[BaseEncoder_PT] = None,
         decoder: Optional[BaseDecoder_PT] = None,
     ):
@@ -193,7 +193,7 @@ class VAE_PT(BaseAE_PT):
     """Vanilla Variational Autoencoder model.
 
     Args:
-        model_config (VAEConfig): The Variational Autoencoder configuration setting the main
+        model_config (VAE_PTConfig): The Variational Autoencoder configuration setting the main
         parameters of the model.
 
         encoder (BaseEncoder_PT): An instance of BaseEncoder_PT (inheriting from `torch.nn.Module` which
@@ -213,7 +213,7 @@ class VAE_PT(BaseAE_PT):
 
     def __init__(
         self,
-        model_config: VAEConfig,
+        model_config: VAE_PTConfig,
         encoder: Optional[BaseEncoder_PT] = None,
         decoder: Optional[BaseDecoder_PT] = None,
     ):

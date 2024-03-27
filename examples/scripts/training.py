@@ -283,13 +283,13 @@ def main(args):
         )
 
     elif args.model_name == "VAE_PT":
-        from pythae.models import VAE_PT, VAEConfig
+        from pythae.models import VAE_PT, VAE_PTConfig
 
         if args.model_config is not None:
-            model_config = VAEConfig.from_json_file(args.model_config)
+            model_config = VAE_PTConfig.from_json_file(args.model_config)
 
         else:
-            model_config = VAEConfig()
+            model_config = VAE_PTConfig()
 
         model_config.input_dim = data_input_dim
 

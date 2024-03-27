@@ -4,11 +4,11 @@ from typing import List, Union
 from pydantic.dataclasses import dataclass
 from typing_extensions import Literal
 
-from ..vae import VAEConfig
+from ..vae import VAE_PTConfig
 
 
 @dataclass
-class INFOVAE_MMD_Config(VAEConfig):
+class INFOVAE_MMD_Config(VAE_PTConfig):
     """Info-VAE model config class.
 
     Parameters:

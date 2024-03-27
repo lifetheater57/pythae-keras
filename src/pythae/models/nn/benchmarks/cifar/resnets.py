@@ -160,8 +160,8 @@ class Encoder_ResNet_VAE_CIFAR(BaseEncoder_PT):
     .. code-block::
 
         >>> from pythae.models.nn.benchmarks.cifar import Encoder_ResNet_VAE_CIFAR
-        >>> from pythae.models import VAEConfig
-        >>> model_config = VAEConfig(input_dim=(3, 32, 32), latent_dim=16)
+        >>> from pythae.models import VAE_PTConfig
+        >>> model_config = VAE_PTConfig(input_dim=(3, 32, 32), latent_dim=16)
         >>> encoder = Encoder_ResNet_VAE_CIFAR(model_config)
         >>> encoder
         ... Encoder_ResNet_VAE_CIFAR(
@@ -587,8 +587,8 @@ class Decoder_ResNet_AE_CIFAR(BaseDecoder_PT):
     .. code-block::
 
         >>> from pythae.models.nn.benchmarks.cifar import Decoder_ResNet_AE_CIFAR
-        >>> from pythae.models import VAEConfig
-        >>> model_config = VAEConfig(input_dim=(3, 32, 32), latent_dim=16)
+        >>> from pythae.models import VAE_PTConfig
+        >>> model_config = VAE_PTConfig(input_dim=(3, 32, 32), latent_dim=16)
         >>> decoder = Decoder_ResNet_AE_CIFAR(model_config)
         >>> decoder
         ... Decoder_ResNet_AE_CIFAR(

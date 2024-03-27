@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 import torch
 
-from pythae.models import AEConfig, VAEConfig
+from pythae.models import AEConfig
 from pythae.models.nn.benchmarks.celeba import *
 from pythae.models.nn.benchmarks.cifar import *
 from pythae.models.nn.benchmarks.mnist import *

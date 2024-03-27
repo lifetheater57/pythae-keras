@@ -5,7 +5,7 @@ import pytest
 import torch
 
 from pythae.customexception import BadInheritanceError
-from pythae.models import VAE, AutoModel, VAEConfig
+from pythae.models import VAE, AutoModel, VAE_PTConfig, VAE_PT
 from pythae.models.base.base_utils import ModelOutput
 from pythae.pipelines import GenerationPipeline, TrainingPipeline
 from pythae.samplers import (
@@ -25,15 +25,15 @@ from tests.data.custom_architectures import (
 PATH = os.path.dirname(os.path.abspath(__file__))
 
 
-@pytest.fixture(params=[VAEConfig(), VAEConfig(latent_dim=5)])
+@pytest.fixture(params=[VAE_PTConfig(), VAE_PTConfig(latent_dim=5,)])
 def model_configs_no_input_dim(request):
     return request.param
 
 
 @pytest.fixture(
     params=[
-        VAEConfig(input_dim=(1, 28, 28), latent_dim=10, reconstruction_loss="bce"),
-        VAEConfig(input_dim=(1, 28), latent_dim=5),
+        VAE_PTConfig(input_dim=(1, 28, 28), latent_dim=10, reconstruction_loss="bce"),
+        VAE_PTConfig(input_dim=(1, 28), latent_dim=5),
     ]
 )
 def model_configs(request):
@@ -749,7 +749,7 @@ class Test_VAE_Generation:
 
     @pytest.fixture()
     def ae_model(self):
-        return VAE(VAEConfig(input_dim=(1, 28, 28), latent_dim=7))
+        return VAE_PT(VAE_PTConfig(input_dim=(1, 28, 28), latent_dim=7))
 
     @pytest.fixture(
         params=[

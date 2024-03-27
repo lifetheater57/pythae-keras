@@ -1,10 +1,10 @@
 from pydantic.dataclasses import dataclass
 
-from ..vae import VAEConfig
+from ..vae import VAE_PTConfig
 
 
 @dataclass
-class VAMPConfig(VAEConfig):
+class VAMPConfig(VAE_PTConfig):
     """VAMP config class.
 
     Parameters:
