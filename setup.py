@@ -3,6 +3,23 @@ from setuptools import find_packages, setup
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+keras_backend_libs = []
+
+try:
+    import torch
+except Exception:
+    keras_backend_libs += [
+        "torch==2.1.0",
+        "torchvision==0.16.0",
+    ]
+
+try:
+    import tensorflow
+except Exception:
+    keras_backend_libs += [
+        "tensorflow==2.16.1",
+    ]
+
 setup(
     name="pythae",
     version="0.1.2",
@@ -32,14 +49,12 @@ setup(
         "pydantic>=2.0",
         "scikit-learn",
         "scipy>=1.7.1",
-        "torch==2.1.0",
-        "torchvision==0.16.0",
         "keras==3.0.0",
         "matplotlib",
         "tqdm",
         "typing_extensions",
         "dataclasses>=0.6",
-    ],
+    ] + keras_backend_libs,
     extras_require={':python_version == "3.7.*"': ["pickle5"]},
     python_requires=">=3.7",
 )
