@@ -221,7 +221,7 @@ class Decoder_AE_MLP(BaseDecoder):
 
         model.add(layers.Dense(int(ops.prod(args.input_dim)), activation="sigmoid"))
 
-        self.layers = model
+        self.model = model
         self.depth = len(model.layers)
 
     #TODO: add back type hinting
@@ -247,7 +247,7 @@ class Decoder_AE_MLP(BaseDecoder):
         out = z
 
         for i in range(max_depth):
-            out = self.layers[i](out)
+            out = self.model[i](out)
 
             if output_layer_levels is not None:
                 if i + 1 in output_layer_levels:
