@@ -2,6 +2,11 @@ import os
 import subprocess
 import sys
 
+"""Arguments
+    arg 1 : the Keras backend to use among tensorflow, torch and jax
+    [optional] arg 2 : the target of the test (a test file or folder)
+"""
+
 # Validate arguments
 if len(sys.argv) < 2 and sys.argv[1] in ["tensorflow", "torch", "jax"]:
     raise Exception("The first argument must be the Keras backend to use. \n\
@@ -15,6 +20,7 @@ print(f"Running Keras on {sys.argv[1]} backend.")
 if len(sys.argv) > 2:
     command = f"pytest {sys.argv[2]}"
 else:
-    command = "pytest tests/"
+    dirname = os.path.dirname(__file__)
+    command = f"pytest {os.path.join(dirname, '../tests/')}"
 
 subprocess.run(command, shell=True)
