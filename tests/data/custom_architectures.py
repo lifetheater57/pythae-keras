@@ -8,6 +8,7 @@ import keras
 from keras import layers, ops
 
 from pythae.models.base.base_utils import ModelOutput
+from pythae.models.base.base_config import BaseAEConfig
 from pythae.models.nn import *
 
 
@@ -248,13 +249,13 @@ class Encoder_SVAE_Conv(BaseEncoder_PT):
 
         return output
 
-
+@keras.saving.register_keras_serializable()
 class Decoder_AE_Conv(BaseDecoder):
-    def __init__(self, args):
-        super().__init__()
+    def __init__(self, model_config: BaseAEConfig):
+        super().__init__(model_config)
         
-        self.input_dim = args.input_dim
-        self.latent_dim = args.latent_dim
+        self.input_dim = model_config.input_dim
+        self.latent_dim = model_config.latent_dim
         self.n_channels = 1
 
         model = keras.Sequential([keras.Input(shape=self.latent_dim)])

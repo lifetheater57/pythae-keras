@@ -8,6 +8,7 @@ import keras
 from keras import layers, ops
 
 from . import BaseDecoder, BaseEncoder, BaseDecoder_PT, BaseEncoder_PT, BaseDiscriminator, BaseMetric
+from ..base.base_config import BaseAEConfig
 
 from ..base.base_utils import ModelOutput
 
@@ -210,16 +211,18 @@ class Encoder_SVAE_MLP(BaseEncoder_PT):
         return output
 
 
+@keras.saving.register_keras_serializable()
 class Decoder_AE_MLP(BaseDecoder):
-    def __init__(self, args: dict):
-        super().__init__()
-        self.input_dim = args.input_dim
+    def __init__(self, model_config: BaseAEConfig):
+        super().__init__(model_config)
 
-        model = keras.Sequential([keras.Input(shape=args.latent_dim)])
+        self.input_dim = model_config.input_dim
+
+        model = keras.Sequential([keras.Input(shape=model_config.latent_dim)])
 
         model.add(layers.Dense(512, activation='relu'))
 
-        model.add(layers.Dense(int(ops.prod(args.input_dim)), activation="sigmoid"))
+        model.add(layers.Dense(int(ops.prod(model_config.input_dim)), activation="sigmoid"))
 
         self.model = model
         self.depth = len(model.layers)

@@ -4,10 +4,11 @@ import warnings
 from dataclasses import asdict, field
 from typing import Any, Dict, Union
 
+import keras
 from pydantic import ValidationError
 from pydantic.dataclasses import dataclass
 
-
+@keras.saving.register_keras_serializable()
 @dataclass
 class BaseConfig:
     """This is the BaseConfig class which defines all the useful loading and saving methods
@@ -17,6 +18,13 @@ class BaseConfig:
 
     def __post_init__(self):
         self.name = self.__class__.__name__
+
+    def get_config(self):
+        return asdict(self)
+    
+    @classmethod
+    def from_config(cls, config):
+        return cls(**config)
 
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> "BaseConfig":

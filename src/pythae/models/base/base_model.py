@@ -35,6 +35,7 @@ logger.addHandler(console)
 logger.setLevel(logging.INFO)
 
 
+@keras.saving.register_keras_serializable()
 class BaseAE(keras.Model):
     """Base class for Autoencoder based models.
 
@@ -91,6 +92,23 @@ class BaseAE(keras.Model):
         self.set_decoder(decoder)
 
         self.device = None
+
+    def get_config(self):
+        config = {
+            "model_config": self.model_config,
+            "encoder": self.encoder if hasattr(self, "encoder") else None,
+            "decoder": self.decoder if hasattr(self, "decoder") else None,
+        }
+        return config
+    
+    @classmethod
+    def from_config(cls, config):
+        config.update({
+            "model_config": keras.saving.deserialize_keras_object(config["model_config"]),
+            "encoder": keras.saving.deserialize_keras_object(config["encoder"]),
+            "decoder": keras.saving.deserialize_keras_object(config["decoder"]),
+        })
+        return cls(**config)
 
     def call(self, inputs):
         return self.forward(inputs)

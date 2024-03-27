@@ -3,6 +3,8 @@ import torch.nn as nn
 
 import keras
 
+from ..base.base_config import BaseConfig
+
 
 class BaseEncoder(keras.Model):
     """This is a base class for Encoders neural networks."""
@@ -52,11 +54,24 @@ class BaseEncoder(keras.Model):
 class BaseDecoder(keras.Model):
     """This is a base class for Decoders neural networks."""
 
-    def __init__(self):
+    def __init__(self, model_config: BaseConfig):
         super().__init__()
+
+        self.model_config = model_config
 
     def call(self, z):
         return self.forward(z)
+    
+    def get_config(self):
+        config = {
+            "model_config": self.model_config
+        }
+        return config
+    
+    @classmethod
+    def from_config(cls, config):
+        config["model_config"] = keras.saving.deserialize_keras_object(config["model_config"])
+        return cls(**config)
     
     #TODO: add back type hinting
     def forward(self, z):#: torch.Tensor):
