@@ -7,7 +7,7 @@ import sys
 """
 
 dirname = os.path.dirname(__file__)
-command = f"python {os.path.join(dirname, 'python ../utils/test_keras.py jax')}"
+command = f"python {os.path.join(dirname, '../utils/test_keras.py')} jax"
 
 if len(sys.argv) > 1:
     command += f" {sys.argv[1]}"

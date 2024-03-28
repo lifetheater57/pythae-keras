@@ -8,7 +8,7 @@ import sys
 """
 
 # Validate arguments
-if len(sys.argv) < 2 and sys.argv[1] in ["tensorflow", "torch", "jax"]:
+if len(sys.argv) < 2 or sys.argv[1] not in ["tensorflow", "torch", "jax"]:
     raise Exception("The first argument must be the Keras backend to use. \n\
                        Options are \"tensorflow\", \"torch\", \"jax\".")
 
