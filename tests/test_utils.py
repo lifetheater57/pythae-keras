@@ -28,7 +28,7 @@ def root_path(request):
 def non_root_path(request):
     return request.param
 
-
+@pytest.mark.slow
 class Test_Library_Testing:
     def test_run_single_backend_test(self, backend):
         script = os.path.join(PATH_UTILS, f"test_{backend}.py")
