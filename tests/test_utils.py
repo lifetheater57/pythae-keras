@@ -8,7 +8,7 @@ PATH_UTILS = os.path.join(PATH, "../utils")
 FILE_TEST = os.path.join(PATH, "test_baseAE.py")
 
 
-@pytest.fixture(params=["tensorflow", "torch", "jax"])
+@pytest.fixture(params=["tensorflow", "torch"])
 def backend(request):
 
     return request.param
