@@ -1,8 +1,20 @@
 # pythae-keras
 
-This <a href='https://github.com/clementchadebec/benchmark_VAE'>pythae</a> fork aims to translate the PyTorch specific library to a Keras 3-based library that would support TensorFlow, PyTorch and Jax backends simultaneously.
+This **pythae** fork aims to translate the PyTorch based library to a Keras 3-based library that would support TensorFlow, PyTorch and Jax backends simultaneously. This would allow using the models in infrastructures made for any of these 3 backends. 
 
-Check the `kerasization` branch to see the progress.
+To get the lastest version in PyTorch, check the <a href='https://github.com/clementchadebec/benchmark_VAE'>original repository</a>.
+
+This `kerasization` branch contains the lastest progress in the library's translation:
+
+- The base model for autoencoders have been converted to Keras and passes the tests. 
+- Scripts have been added under `utils/` to ease testing in all supported backends. 
+- The vanilla VAE model have been translated, but doesn't pass the tests (work in progress).
+
+The next steps are:
+
+- Complete the Keras' VAE debugging
+- Update the doc and examples
+- Translates the other models currently implemented in PyTorch
 
 ## Below is the documentation of the original library (to be updated)
 
@@ -145,7 +157,7 @@ To launch a model training, you only need to call a `TrainingPipeline` instance.
 
 ```python
 >>> from pythae.pipelines import TrainingPipeline
->>> from pythae.models import VAE, VAEConfig
+>>> from pythae.models import VAE_PT, VAE_PTConfig
 >>> from pythae.trainers import BaseTrainerConfig
 
 >>> # Set up the training configuration
@@ -164,12 +176,12 @@ To launch a model training, you only need to call a `TrainingPipeline` instance.
 ...	scheduler_params={"patience": 5, "factor": 0.5}
 ... )
 >>> # Set up the model configuration 
->>> my_vae_config = model_config = VAEConfig(
+>>> my_vae_config = model_config = VAE_PTConfig(
 ...	input_dim=(1, 28, 28),
 ...	latent_dim=10
 ... )
 >>> # Build the model
->>> my_vae_model = VAE(
+>>> my_vae_model = VAE_PT(
 ...	model_config=my_vae_config
 ... )
 >>> # Build the Pipeline
